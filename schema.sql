@@ -15,7 +15,7 @@ CREATE TABLE produits (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	categorie MEDIUMINT UNSIGNED NULL REFERENCES categories (id) ON DELETE SET NULL,
 	nom VARCHAR(255) NOT NULL,
-	descriptif LONGTEXT,
+	description LONGTEXT,
 	image_apercu INTEGER UNSIGNED NULL REFERENCES images (id) ON DELETE SET NULL
 );
 
@@ -23,16 +23,14 @@ CREATE TABLE images (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	produit INTEGER UNSIGNED NOT NULL REFERENCES produits (id) ON DELETE CASCADE,
 	hash BINARY(20) NOT NULL,
-	ordre TINYINT UNSIGNED NOT NULL,
-	UNIQUE (produit, ordre),
 	UNIQUE (produit, hash)
 );
 
 CREATE TABLE encheres (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	produit INTEGER UNSIGNED NOT NULL REFERENCES produits (id) ON DELETE CASCADE,
-	cout_mise NUMERIC(10, 2) NOT NULL,
-	prix_public NUMERIC(10, 2),
+	cout_mise SMALLINT UNSIGNED NOT NULL,
+	prix_public SMALLINT UNSIGNED,
 	date_debut DATETIME NOT NULL,
 	date_fin DATETIME NOT NULL,
 	nb_mises INTEGER UNSIGNED NULL
@@ -42,7 +40,7 @@ CREATE TABLE mises (
 	id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	utilisateur INTEGER UNSIGNED NOT NULL REFERENCES utilisateurs (id) ON DELETE CASCADE,
 	enchere INTEGER UNSIGNED NOT NULL REFERENCES encheres (id) ON DELETE CASCADE,
-	valeur NUMERIC(10, 2) NOT NULL,
+	montant SMALLINT UNSIGNED NOT NULL,
 	`date` DATETIME NOT NULL
 );
 
@@ -67,15 +65,15 @@ CREATE TABLE meta_form_fields (
 CREATE VIEW mise_gagnante AS
 	SELECT *
 	FROM mises
-	GROUP BY enchere, valeur
-	HAVING COUNT(valeur) = 1
-	ORDER BY valeur LIMIT 1;
+	GROUP BY enchere, montant
+	HAVING COUNT(montant) = 1
+	ORDER BY montant LIMIT 1;
 
 CREATE VIEW mes_mises AS
 	SELECT *, COUNT(id) AS nb_mises
 	FROM mises
-	GROUP BY enchere, valeur
-	ORDER BY valeur;
+	GROUP BY enchere, montant
+	ORDER BY montant;
 
 CREATE VIEW liste_encheres_courantes AS
 	SELECT p.id, p.nom, e.*, c.nom AS nom_categorie
