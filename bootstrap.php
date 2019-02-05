@@ -15,8 +15,8 @@ spl_autoload_register(function (string $class): void {
 		$parent = __DIR__ . '/vendor';
 	}
 
-	$path = str_replace('\\', DIRECTORY_SEPARATOR, $path);
-	$path = $parent . $path . '.php';
+	$path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+	$path = $parent . '/' . $path . '.php';
 
 	require $path;
 });
@@ -37,3 +37,9 @@ $tpl->setCompiledDir(ROOT . '/cache/compiled');
 $tpl->assign('www_url', '/');
 $tpl->assign('site_title', SITE_TITLE);
 
+$user = Membre::getLoggedUser();
+$user_is_admin = !empty($user->admin);
+
+$tpl->assign('user', $user);
+$tpl->assign('is_admin', $user_is_admin);
+$tpl->assign('is_logged', (bool) $user);

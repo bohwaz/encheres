@@ -4,20 +4,18 @@ namespace Projet;
 
 class Categories
 {
-	public function add(string $nom): bool
-	{
-		return DB::getInstance()->insert('categories', [
-			'nom' => trim($nom)
-		]);
-	}
+	use Editable;
 
-	public function list(): array
-	{
-		return DB::getInstance()->get('SELECT * FROM categories ORDER BY nom;');
-	}
+	/**
+	 * @var int
+	 * @primary
+	 */
+	public $id;
 
-	public function delete(int $id): bool
-	{
-		return DB::getInstance()->delete('categories', 'id = ?', $id);
-	}
+	/**
+	 * @var string
+	 * @unique
+	 * @field text
+	 */
+	public $nom;
 }

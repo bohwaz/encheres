@@ -3,7 +3,8 @@ CREATE TABLE membres (
 	email VARCHAR(255) NOT NULL UNIQUE,
 	passe VARCHAR(255) NOT NULL,
 	admin TINYINT NOT NULL DEFAULT 0,
-	date_inscription DATETIME NOT NULL
+	date_inscription DATETIME NOT NULL,
+	credit INTEGER NOT NULL DEFAULT 1000
 );
 
 CREATE TABLE categories (
@@ -82,3 +83,11 @@ CREATE VIEW liste_encheres_courantes AS
 	INNER JOIN categories AS c ON c.id = p.categorie
 	WHERE NOW() BETWEEN e.date_debut AND e.date_fin
 	ORDER BY e.date_fin DESC;
+
+-- SELECT * FROM mises_statuts WHERE user = ? AND enchere = ?
+CREATE VIEW mises_statuts AS
+	SELECT * FROM (
+		SELECT *, "unique" AS statut FROM mises_uniques
+		UNION SELECT *, "multiple" AS statut FROM mises_multiples
+		UNION SELECT *, "gagnante" AS statut FROM mises_gagnantes)
+	ORDER BY montant;

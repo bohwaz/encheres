@@ -31,6 +31,11 @@ class Mises
 			$st->execute($values);
 		}
 
+		$cout_par_mise = $db->firstColumn('SELECT cout_mise FROM encheres WHERE id = ?;', $enchere);
+		$cout = $cout_par_mise * min(1, ($end - $start));
+
+		$db->preparedQuery('UPDATE membres SET credit = credit - ? WHERE id = ?;', [$cout, $utilisateur]);
+
 		return $db->commit();
 	}
 

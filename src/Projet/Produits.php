@@ -6,31 +6,35 @@ use KD2\Image;
 
 class Produits
 {
-	public function add(int $id_categorie, string $nom, string $description): bool
-	{
-		return DB::getInstance()->insert('produits', [
-			'categorie'   => $id_categorie,
-			'nom'         => trim($nom),
-			'description' => trim($description),
-		]);
-	}
+	use Editable;
 
-	public function delete(int $id): bool
-	{
-		return DB::getInstance()->delete('produits', 'id = ?', $id);
-	}
+	/**
+	 * @var int
+	 * @primary
+	 */
+	public $id;
 
-	public function update(int $id, int $categorie, string $nom, string $description): bool
-	{
-		return DB::getInstance()->update('produits', [
-			'categorie'   => $id_categorie,
-			'nom'         => trim($nom),
-			'description' => trim($description),
-		], 'id = :id', ['id' => $id]);
-	}
+	/**
+	 * @var string
+	 * @field tinytext
+	 * @name Nom du produit
+	 */
+	public $nom;
 
-	public function addImage(int $id_produit, string $path): int
+	/**
+	 * @var string
+	 * @field longtext
+	 * @name Description du produit
+	 */
+	public $description;
+
+	public function addImage(string $path): int
 	{
+		if (!$this->id)
+		{
+			throw new RuntimeException('Object must be saved to DB first');
+		}
+
 		$hash = sha1_file($path, true);
 		$db = DB::getInstance();
 
@@ -38,7 +42,7 @@ class Produits
 
 		try {
 			$db->insert('images', [
-				'produit' => $id_produit,
+				'produit' => $this->id,
 				'hash'    => $hash,
 			]);
 
@@ -60,5 +64,10 @@ class Produits
 			$db->rollback();
 			throw $e;
 		}
+	}
+
+	public function deleteImage(int $id_image): int
+	{
+		return DB::getInstance()->delete('images', 'id = ?', $id_image);
 	}
 }
