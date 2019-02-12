@@ -4,14 +4,9 @@ namespace Projet;
 
 use stdClass;
 
-class Membre
+class Membre extends Entity
 {
-	use Editable;
-
-	/**
-	 * @var integer
-	 */
-	public $id;
+	protected $table = 'membres';
 
 	/**
 	 * @var string
@@ -19,35 +14,35 @@ class Membre
 	 * @unique
 	 * @name Adresse E-Mail
 	 */
-	public $email;
+	protected $email;
 
 	/**
 	 * @var string
 	 * @field password
 	 * @name Mot de passe
 	 */
-	public $password;
+	protected $passe;
 
 	/**
 	 * @var integer
 	 * @field number
 	 * @name Crédit
 	 */
-	public $credit;
+	protected $credit = 0;
 
 	/**
 	 * @var DateTime
 	 * @default now
 	 * @name Date d'inscription
 	 */
-	public $date_inscription;
+	protected $date_inscription;
 
 	/**
 	 * @var bool
 	 * @field checkbox
 	 * @name Administrateur
 	 */
-	public $admin;
+	protected $admin;
 
 	static public function login(string $email, string $password): bool
 	{
@@ -96,13 +91,9 @@ class Membre
 		return new Membre($_SESSION['user_id']);
 	}
 
-	public function __construct(int $id = null)
-	{
-		$this->_initObjectData($id);
-	}
-
 	public function addCredit(int $amount): bool
 	{
-		return DB::getInstance()->preparedQuery('UPDATE membres SET credit = credit + ? WHERE id = ?;', [$amount, $this->id]);
+		$this->__set('credit', $this->credit + $amount);
+		return $this->save();
 	}
 }

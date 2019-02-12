@@ -1,4 +1,6 @@
-CREATE TABLE membres (
+SET FOREIGN_KEY_CHECKS=0;
+
+CREATE TABLE IF NOT EXISTS membres (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	email VARCHAR(255) NOT NULL UNIQUE,
 	passe VARCHAR(255) NOT NULL,
@@ -7,12 +9,12 @@ CREATE TABLE membres (
 	credit INTEGER NOT NULL DEFAULT 1000
 );
 
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
 	id MEDIUMINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	nom VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE produits (
+CREATE TABLE IF NOT EXISTS produits (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	categorie MEDIUMINT UNSIGNED NULL,
 	nom VARCHAR(255) NOT NULL,
@@ -22,16 +24,16 @@ CREATE TABLE produits (
 	FOREIGN KEY (image) REFERENCES images (id) ON DELETE SET NULL
 );
 
-CREATE TABLE produits_details (
+CREATE TABLE IF NOT EXISTS produits_details (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	produit INTEGER UNSIGNED NOT NULL,
 	nom VARCHAR(191) NOT NULL,
 	valeur TEXT NOT NULL,
-	UNIQUE (produit, nom)
+	UNIQUE (produit, nom),
 	FOREIGN KEY (produit) REFERENCES produits (id) ON DELETE CASCADE
 );
 
-CREATE TABLE images (
+CREATE TABLE IF NOT EXISTS images (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	produit INTEGER UNSIGNED NOT NULL,
 	hash VARCHAR(191) NOT NULL,
@@ -39,7 +41,7 @@ CREATE TABLE images (
 	FOREIGN KEY (produit) REFERENCES produits (id) ON DELETE CASCADE
 );
 
-CREATE TABLE encheres (
+CREATE TABLE IF NOT EXISTS encheres (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	produit INTEGER UNSIGNED NOT NULL,
 	cout_mise SMALLINT UNSIGNED NOT NULL,
@@ -50,7 +52,7 @@ CREATE TABLE encheres (
 	FOREIGN KEY (produit) REFERENCES produits (id) ON DELETE CASCADE
 );
 
-CREATE TABLE mises (
+CREATE TABLE IF NOT EXISTS mises (
 	id BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	utilisateur INTEGER UNSIGNED NOT NULL,
 	enchere INTEGER UNSIGNED NOT NULL,
@@ -60,15 +62,17 @@ CREATE TABLE mises (
 	FOREIGN KEY (enchere) REFERENCES encheres (id) ON DELETE CASCADE
 );
 
+DELIMITER //
 CREATE TRIGGER encheres_nombre_mises_add AFTER INSERT ON mises
 	FOR EACH ROW BEGIN
 		UPDATE encheres SET nb_mises = COALESCE(nb_mises, 0) + 1 WHERE id = NEW.enchere;
 	END;
-
+//
 CREATE TRIGGER encheres_nombre_mises_sub AFTER DELETE ON mises
 	FOR EACH ROW BEGIN
 		UPDATE encheres SET nb_mises = COALESCE(nb_mises, 0) - 1 WHERE id = OLD.enchere;
 	END;
+DELIMITER ;
 
 CREATE VIEW mise_gagnante AS
 	SELECT *
@@ -84,7 +88,7 @@ CREATE VIEW mes_mises AS
 	ORDER BY montant;
 
 CREATE VIEW liste_encheres_courantes AS
-	SELECT p.id, p.nom, e.*, c.nom AS nom_categorie
+	SELECT p.id AS pid, p.nom, e.*, c.nom AS nom_categorie
 	FROM produits AS p
 	INNER JOIN encheres AS e ON e.produit = p.id
 	INNER JOIN categories AS c ON c.id = p.categorie
@@ -98,3 +102,5 @@ CREATE VIEW mises_statuts AS
 		UNION SELECT *, "multiple" AS statut FROM mises_multiples
 		UNION SELECT *, "gagnante" AS statut FROM mises_gagnantes)
 	ORDER BY montant;
+
+SET FOREIGN_KEY_CHECKS=1;
