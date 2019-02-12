@@ -1,9 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace Projet;
-
 use KD2\ErrorManager as EM;
-use KD2\Smartyer;
+use KD2\Form;
 
 spl_autoload_register(function (string $class): void {
 	if (strpos($class, 'Projet\\') === 0)
@@ -18,6 +16,11 @@ spl_autoload_register(function (string $class): void {
 	$path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
 	$path = $parent . '/' . $path . '.php';
 
+	if (!file_exists($path))
+	{
+		throw new \Exception('Cannot require: ' . $path);
+	}
+
 	require $path;
 });
 
@@ -30,16 +33,6 @@ EM::enable(EM::DEVELOPMENT);
 
 require ROOT . '/config.local.php';
 
-$tpl = new Smartyer;
-$tpl->setTemplatesDir(ROOT . '/templates');
-$tpl->setCompiledDir(ROOT . '/cache/compiled');
+Form::tokenSetSecret(SECRET_KEY);
 
-$tpl->assign('www_url', '/');
-$tpl->assign('site_title', SITE_TITLE);
-
-$user = Membre::getLoggedUser();
-$user_is_admin = !empty($user->admin);
-
-$tpl->assign('user', $user);
-$tpl->assign('is_admin', $user_is_admin);
-$tpl->assign('is_logged', (bool) $user);
+require ROOT . '/template.php';
