@@ -4,29 +4,35 @@ namespace Projet;
 
 use KD2\Image;
 
-class Produits
+class Produit extends Entity
 {
-	use Editable;
+	protected $table = 'produits';
 
 	/**
 	 * @var int
-	 * @primary
 	 */
-	public $id;
+	protected $id;
 
 	/**
 	 * @var string
 	 * @field tinytext
 	 * @name Nom du produit
 	 */
-	public $nom;
+	protected $nom;
 
 	/**
 	 * @var string
 	 * @field longtext
 	 * @name Description du produit
 	 */
-	public $description;
+	protected $description;
+
+	/**
+	 * @var string
+	 * @field image
+	 * @null
+	 */
+	protected $image;
 
 	public function addImage(string $path): int
 	{
@@ -69,5 +75,10 @@ class Produits
 	public function deleteImage(int $id_image): int
 	{
 		return DB::getInstance()->delete('images', 'id = ?', $id_image);
+	}
+
+	public function listImages(): array
+	{
+		return DB::getInstance()->get('SELECT * FROM images WHERE produit = ? ORDER BY id;', $this->id);
 	}
 }

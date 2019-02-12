@@ -11,7 +11,6 @@ class Encheres
 		return DB::getInstance()->get('SELECT * FROM liste_encheres_courantes;');
 	}
 
-
 	public function add(int $id_produit, int $cout_mise, int $prix_public, DateTime $debut, DateTime $fin): bool
 	{
 	}

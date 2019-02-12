@@ -25,7 +25,7 @@ class Entity
 	protected $exists = false;
 	protected $id;
 
-	public function __set($key, $value)
+	public function __set($key, $value): void
 	{
 		$annotations =& $this->fields[$key];
 
@@ -41,6 +41,28 @@ class Entity
 
 		$this->$key = $value;
 		$this->modified[$key] = $value;
+	}
+
+	public function set($key, $value = null): void
+	{
+		if (is_array($key))
+		{
+			foreach ($key as $_key => $value)
+			{
+				$this->set($_key, $value);
+			}
+
+			return;
+		}
+
+		$rules = $this->_getFieldRules($this->fields[$key]);
+
+		if (!Form::validate($key, $errors, $fields))
+		{
+			throw new User_Exception($this->_getErrorMessage($errors));
+		}
+
+		$this->__set($key, $value);
 	}
 
 	public function __get($key)
@@ -125,19 +147,9 @@ class Entity
 		return DB::getInstance()->get('SELECT * FROM ' . $this->table . ' ORDER BY id DESC LIMIT ?,?;', $begin, $per_page);
 	}
 
-	public function setAll(array $fields): void
+	public function getFields()
 	{
-		foreach ($fields as $key=>&$value)
-		{
-			$rules = $this->_getFieldRules($annotations);
-
-			if (!Form::validate($key, $errors, $fields))
-			{
-				throw new User_Exception($this->_getErrorMessage($errors));
-			}
-
-			$this->__set($key, $value);
-		}
+		return $this->fields;
 	}
 
 	protected function _getFieldValue($value, stdClass $annotations)
@@ -176,20 +188,20 @@ class Entity
 		return $rules;
 	}
 
-	protected function _getErrorValidationMessage(string $rule, stdClass $field)
+	static public function getErrorValidationMessage(string $rule, string $name)
 	{
 		switch ($rule)
 		{
 			case 'required':
-				return sprintf('Le champ "%s" est requis.', $field->name);
+				return sprintf('Le champ "%s" est requis.', $name);
 			case 'email':
-				return sprintf('Le champ "%s" doit être une adresse e-mail valide.', $field->name);
+				return sprintf('Le champ "%s" doit être une adresse e-mail valide.', $name);
 			case 'date_format':
-				return sprintf('Format de date invalide dans le champ %s.', $field->name);
+				return sprintf('Format de date invalide dans le champ %s.', $name);
 			case 'numeric':
-				return sprintf('Le champ %s doit être un nombre.', $field->name);
+				return sprintf('Le champ %s doit être un nombre.', $name);
 			default:
-				return sprintf('Erreur "%s" dans le champ "%s"', $rule, $field->name);
+				return sprintf('Erreur "%s" dans le champ "%s"', $rule, $name);
 		}
 	}
 
@@ -199,7 +211,7 @@ class Entity
 
 		foreach ($errors as $error)
 		{
-			$messages = $this->_getErrorValidationMessage($error['rule'], $fields[$error['name']]);
+			$messages = self::getErrorValidationMessage($error['rule'], $fields[$error['name']]->name);
 		}
 
 		return implode("\n", $messages);

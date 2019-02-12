@@ -2,9 +2,9 @@
 
 namespace Projet;
 
-class Categories
+class Categorie extends Entity
 {
-	use Editable;
+	protected $table = 'categories';
 
 	/**
 	 * @var int
@@ -16,6 +16,7 @@ class Categories
 	 * @var string
 	 * @unique
 	 * @field text
+	 * @name Nom de la catégorie
 	 */
 	public $nom;
 }
