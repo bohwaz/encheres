@@ -57,7 +57,7 @@ class Entity
 
 		$rules = $this->_getFieldRules($this->fields[$key]);
 
-		if (!Form::validate($key, $errors, $fields))
+		if (!Form::validate([$key => $rules], $errors, [$key => $value]))
 		{
 			throw new User_Exception($this->_getErrorMessage($errors));
 		}
@@ -205,13 +205,13 @@ class Entity
 		}
 	}
 
-	protected function _getErrorMessage(array $errors, array $fields)
+	protected function _getErrorMessage(array $errors)
 	{
 		$messages = [];
 
 		foreach ($errors as $error)
 		{
-			$messages = self::getErrorValidationMessage($error['rule'], $fields[$error['name']]->name);
+			$messages = self::getErrorValidationMessage($error['rule'], $this->fields[$error['name']]->name);
 		}
 
 		return implode("\n", $messages);

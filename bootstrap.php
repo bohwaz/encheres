@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace Projet;
+
 use KD2\ErrorManager as EM;
 use KD2\Form;
 
@@ -26,7 +28,7 @@ spl_autoload_register(function (string $class): void {
 
 class User_Exception extends \RuntimeException {}
 
-const ROOT = __DIR__;
+define('ROOT', __DIR__);
 
 // Activation du gestionnaire d'erreur
 EM::enable(EM::DEVELOPMENT);
