@@ -19,14 +19,14 @@
 			<li><a href="{$www_url}encheres.php?ended">Enchères terminées</a></li>
 			<li><a href="{$www_url}faq.php">Comment ça marche&nbsp;?</a></li>
 		{if $is_logged}
-			<li><a href="{$www_url}compte.php">Créditer mon compte</a></li>
-			<li><a href="{$www_url}logout.php">Déconnexion</a></li>
+			<li><a href="{$www_url}admin/compte.php">Créditer mon compte</a></li>
+			<li><a href="{$www_url}admin/logout.php">Déconnexion</a></li>
 			{if $is_admin}
 				<li><a href="{$www_url}admin/">Admin</a></li>
 			{/if}
 		{else}
 			<li><a href="{$www_url}register.php">Inscription</a></li>
-			<li><a href="{$www_url}login.php">Connexion</a></li>
+			<li><a href="{$www_url}admin/login.php">Connexion</a></li>
 		{/if}
 		</ul>
 	</nav>

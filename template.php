@@ -32,6 +32,8 @@ function redirect($uri = '/')
 
 function form($id, array $rules = [])
 {
+	if ($_SERVER['REQUEST_METHOD'] != 'POST') return;
+
 	global $tpl, $form_errors;
 	return Form::check($id, $rules, $form_errors);
 }
