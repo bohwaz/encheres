@@ -173,15 +173,15 @@ class Entity
 
 	protected function _getFieldRules(stdClass $annotations)
 	{
-		$rules = ['required'];
+		$rules = ['required' => []];
 
 		switch ($annotations->field)
 		{
 			case 'email':
-				$rules[] = 'email';
+				$rules['email'] = [];
 				break;
 			case 'number':
-				$rules[] = 'numeric';
+				$rules['numeric'] = [];
 				 break;
 		}
 
