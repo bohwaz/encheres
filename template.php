@@ -16,7 +16,7 @@ $tpl->assign('site_title', SITE_TITLE);
 $user = Membre::getLoggedUser();
 $user_is_admin = !empty($user->admin);
 
-$tpl->assign('user', $user);
+$tpl->assign('user', $user ? $user->toArray() : null);
 $tpl->assign('is_admin', $user_is_admin);
 $tpl->assign('is_logged', (bool) $user);
 
@@ -88,5 +88,5 @@ $tpl->register_function('form_errors', function ($params, $tpl) {
 });
 
 $tpl->register_modifier('money', function ($amount) {
-	return sprintf('%d,%.2d €', $amount / 100, $amount % 100);
+	return sprintf('%d,%02d €', $amount / 100, $amount % 100);
 });

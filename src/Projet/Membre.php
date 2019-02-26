@@ -6,6 +6,8 @@ use stdClass;
 
 class Membre extends Entity
 {
+	static protected $logged_user;
+
 	protected $table = 'membres';
 
 	/**
@@ -61,8 +63,12 @@ class Membre extends Entity
 			return false;
 		}
 
-		session_start();
-		$_SESSION['user'] = $user;
+		if (!isset($_SESSION))
+		{
+			session_start();
+		}
+
+		$_SESSION['user'] = (array) $user;
 
 		return true;
 	}
@@ -70,18 +76,27 @@ class Membre extends Entity
 	static public function logout(): bool
 	{
 		$_SESSION = [];
-		setcookie(session_name(), null, 0);
+		setcookie(session_name(), '', 0);
+		self::$logged_user = null;
 		return session_destroy();
 	}
 
 	static public function getLoggedUser(): ?Membre
 	{
+		if (null !== self::$logged_user)
+		{
+			return self::$logged_user;
+		}
+
 		if (!isset($_COOKIE[session_name()]))
 		{
 			return null;
 		}
 
-		session_start();
+		if (!isset($_SESSION))
+		{
+			session_start();
+		}
 
 		if (empty($_SESSION['user']))
 		{
@@ -89,13 +104,23 @@ class Membre extends Entity
 		}
 
 		$membre = new Membre;
+		$membre->exists = true;
 
 		foreach ($_SESSION['user'] as $key=>$value)
 		{
 			$membre->$key = $value;
 		}
 
+		self::$logged_user = $membre;
+
 		return $membre;
+	}
+
+	static public function updateLoggedUser(Membre $user): void
+	{
+		self::$logged_user = $user;
+		$_SESSION['user'] = $user->toArray();
+		$_SESSION['user']['id'] = $user->id;
 	}
 
 	public function addCredit(int $amount): bool

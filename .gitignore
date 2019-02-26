@@ -1,1 +1,4 @@
 config.local.php
+.phpintel
+cache/*
+vendor/

@@ -18,6 +18,7 @@ class Entity
 		'null'   => false,
 		'unique' => false,
 		'trim'   => false,
+		'default'=> null,
 	];
 
 	protected $modified = [];
@@ -278,5 +279,17 @@ class Entity
 		$result = array_merge(self::DEFAULT_ANNOTATIONS, $result);
 
 		return (object) $result;
+	}
+
+	public function toArray()
+	{
+		$out = [];
+
+		foreach ($this->fields as $key => $value)
+		{
+			$out[$key] = $this->$key;
+		}
+
+		return $out;
 	}
 }

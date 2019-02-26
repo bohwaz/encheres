@@ -137,3 +137,7 @@ ul.errors li {
 	margin: 1em;
 	padding: 1em;
 }
+
+main .account article {
+	margin: 2em;
+}

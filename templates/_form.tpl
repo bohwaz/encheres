@@ -7,6 +7,9 @@
 			<dd>
 				{if $field.input == 'longtext'}<textarea{else}<input type="{$field.input}"{/if}
 				name="{$key}" id="f_{$key}" {if !$field.null}required="required"{/if}
+				{if isset($field.min)}min="{$field.min}"{/if}
+				{if isset($field.max)}max="{$field.max}"{/if}
+				{if isset($field.step)}step="{$field.step}"{/if}
 				{if $field.input == 'longtext'}>{$field.value}</textarea>{else}value="{$field.value}" />{/if}
 			</dd>
 			{/foreach}
