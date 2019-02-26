@@ -74,7 +74,7 @@ class Membre extends Entity
 		return session_destroy();
 	}
 
-	static public function getLoggedUser(): ?stdClass
+	static public function getLoggedUser(): ?Membre
 	{
 		if (!isset($_COOKIE[session_name()]))
 		{
@@ -83,12 +83,19 @@ class Membre extends Entity
 
 		session_start();
 
-		if (empty($_SESSION['user_id']))
+		if (empty($_SESSION['user']))
 		{
 			return null;
 		}
 
-		return new Membre($_SESSION['user_id']);
+		$membre = new Membre;
+
+		foreach ($_SESSION['user'] as $key=>$value)
+		{
+			$membre->$key = $value;
+		}
+
+		return $membre;
 	}
 
 	public function addCredit(int $amount): bool

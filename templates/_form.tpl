@@ -6,7 +6,7 @@
 			<dt><label for="f_{$key}">{$field.name}</label></dt>
 			<dd>
 				{if $field.input == 'longtext'}<textarea{else}<input type="{$field.input}"{/if}
-				name="{$key}" {if !$field.null}required="required"{/if}
+				name="{$key}" id="f_{$key}" {if !$field.null}required="required"{/if}
 				{if $field.input == 'longtext'}>{$field.value}</textarea>{else}value="{$field.value}" />{/if}
 			</dd>
 			{/foreach}

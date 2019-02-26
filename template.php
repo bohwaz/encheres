@@ -86,3 +86,7 @@ $tpl->register_function('form_errors', function ($params, $tpl) {
 	$tpl->assign('errors', $form_errors);
 	return $tpl->fetch('_form_errors.tpl');
 });
+
+$tpl->register_modifier('money', function ($amount) {
+	return sprintf('%d,%.2d €', $amount / 100, $amount % 100);
+});

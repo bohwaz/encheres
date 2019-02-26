@@ -3,6 +3,7 @@
 require __DIR__ . '/../bootstrap.php';
 
 use Projet\Membre;
+use Projet\User_Exception;
 
 $form_rules = [
 	'email' => 'required|email',

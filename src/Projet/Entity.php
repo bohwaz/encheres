@@ -62,6 +62,16 @@ class Entity
 			throw new User_Exception($this->_getErrorMessage($errors));
 		}
 
+		if ($this->fields[$key]->unique)
+		{
+			$db = DB::getInstance();
+
+			if ($db->test($this->table, $db->quoteIdentifier($key) . ' = ?', $value))
+			{
+				throw new User_Exception($this->getErrorValidationMessage('unique', $this->fields[$key]->name));
+			}
+		}
+
 		$this->__set($key, $value);
 	}
 
