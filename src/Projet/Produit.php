@@ -91,8 +91,8 @@ class Produit extends Entity
 
 	public function deleteImage(int $id_image): bool
 	{
-		unlink(sprintf(IMAGE_PATH, $id_image));
-		unlink(sprintf(THUMBNAIL_PATH, $id_image));
+		@unlink(sprintf(IMAGE_PATH, $id_image));
+		@unlink(sprintf(THUMBNAIL_PATH, $id_image));
 		return (bool) DB::getInstance()->delete('images', 'id = ?', $id_image);
 	}
 
