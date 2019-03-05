@@ -4,7 +4,7 @@ require __DIR__ . '/../../bootstrap.php';
 
 if (!$user)
 {
-	redirect('user/login.php');
+	redirect('/admin/login.php');
 }
 
 if (defined('REQUIRE_ADMIN') && REQUIRE_ADMIN && !$user->admin)

@@ -14,7 +14,7 @@ $tpl->assign('www_url', '/');
 $tpl->assign('site_title', SITE_TITLE);
 
 $user = Membre::getLoggedUser();
-$user_is_admin = !empty($user->admin);
+$user_is_admin = (bool) $user->admin;
 
 $tpl->assign('user', $user ? $user->toArray() : null);
 $tpl->assign('is_admin', $user_is_admin);
