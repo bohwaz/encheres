@@ -4,7 +4,7 @@
 	{foreach from=$list item="item"}
 	<tr>
 		<th>{$item.nom}</th>
-		<td><a href="{$www_url}produit.php?id={$item.id}">Propriétés</a></td>
+		<td><a href="{$www_url}admin/produit.php?id={$item.id}">Gérer</a></td>
 		<td><a href="?delete={$item.id}">Supprimer</a></td>
 	</tr>
 	{/foreach}

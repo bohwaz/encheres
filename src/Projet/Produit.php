@@ -38,6 +38,11 @@ class Produit extends Entity
 	 */
 	protected $categorie;
 
+	/**
+	 * @var array
+	 */
+	protected $proprietes;
+
 	public function addImage(string $path): int
 	{
 		if (!$this->id)
@@ -45,7 +50,7 @@ class Produit extends Entity
 			throw new RuntimeException('Object must be saved to DB first');
 		}
 
-		$hash = sha1_file($path, true);
+		$hash = sha1_file($path);
 		$db = DB::getInstance();
 
 		$db->begin();
@@ -60,14 +65,22 @@ class Produit extends Entity
 
 			$image = new Image($path);
 			$image->resize(800);
-			$image->save(sprintf(IMAGE_PATH, $id));
-			$image->cropResize(300);
+
+			$path = sprintf(IMAGE_PATH, $id);
+
+			if (!is_dir(dirname($path)))
+			{
+				mkdir(dirname($path), 0777, true);
+			}
+
+			$image->save($path);
+			$image->cropResize(200);
 			$image->save(sprintf(THUMBNAIL_PATH, $id));
 			unset($image);
 
 			$db->commit();
 
-			return $id;
+			return (int) $id;
 		}
 		catch (\Exception $e)
 		{
@@ -76,11 +89,11 @@ class Produit extends Entity
 		}
 	}
 
-	public function deleteImage(int $id_image): int
+	public function deleteImage(int $id_image): bool
 	{
 		unlink(sprintf(IMAGE_PATH, $id_image));
 		unlink(sprintf(THUMBNAIL_PATH, $id_image));
-		return DB::getInstance()->delete('images', 'id = ?', $id_image);
+		return (bool) DB::getInstance()->delete('images', 'id = ?', $id_image);
 	}
 
 	public function listImages(): array

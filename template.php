@@ -70,7 +70,7 @@ $tpl->register_function('form', function ($params, $tpl) {
 	}
 
 	$tpl->assign($params);
-	$tpl->assign('url_self', $_SERVER['PHP_SELF']);
+	$tpl->assign('url_self', $_SERVER['REQUEST_URI']);
 	$tpl->assign('csrf', Form::tokenHTML($params['id']));
 	return $tpl->fetch('_form.tpl');
 });
@@ -89,4 +89,16 @@ $tpl->register_function('form_errors', function ($params, $tpl) {
 
 $tpl->register_modifier('money', function ($amount) {
 	return sprintf('%d,%02d €', $amount / 100, $amount % 100);
+});
+
+$tpl->register_modifier('image_url', function ($id) {
+	$path = sprintf(IMAGE_PATH, $id);
+	$path = str_replace(ROOT . '/www', '', $path);
+	return $path;
+});
+
+$tpl->register_modifier('image_thumb_url', function ($id) {
+	$path = sprintf(THUMBNAIL_PATH, $id);
+	$path = str_replace(ROOT . '/www', '', $path);
+	return $path;
 });

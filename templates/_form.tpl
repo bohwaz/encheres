@@ -1,4 +1,4 @@
-<form method="post" action="{$url_self}">
+<form method="post" action="{$url_self}" enctype="multipart/form-data">
 	<fieldset>
 		<legend>{$legend}</legend>
 		<dl>
