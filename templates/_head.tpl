@@ -22,8 +22,8 @@
 			{*<li class="credit"><b>Mon crédit&nbsp;: <strong>{$user.credit|money}</strong></b></li>*}
 			<li><a href="{$www_url}admin/compte.php">Créditer mon compte</a></li>
 			<li><a href="{$www_url}admin/logout.php">Déconnexion</a></li>
-			{if $is_admin}
-				<li><a href="{$www_url}admin/">Admin</a></li>
+			{if $user.admin}
+				<li><a href="{$www_url}admin/"><strong>Admin</strong></a></li>
 			{/if}
 		{else}
 			<li><a href="{$www_url}register.php">Inscription</a></li>

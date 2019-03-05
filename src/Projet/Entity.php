@@ -12,7 +12,7 @@ use stdClass;
 
 use KD2\Form;
 
-class Entity
+abstract class Entity
 {
 	const DEFAULT_ANNOTATIONS = [
 		'null'   => false,
@@ -101,15 +101,37 @@ class Entity
 					throw new \LogicException(sprintf('Column \'%s\' is not an object property', $key));
 				}
 
-				$this->$key = $this->_getFieldValue($value, $this->fields[$key]);
+				if (array_key_exists($key, $this->fields))
+				{
+					$this->$key = $this->_getFieldValue($value, $this->fields[$key]);
+				}
+				else
+				{
+					$this->$key = $value;
+				}
 			}
 
 			$this->exists = true;
 		}
 	}
 
+	protected function selfCheck(): void
+	{
+		foreach ($this->fields as $key=>$annotations)
+		{
+			$rules = $this->_getFieldRules($this->fields[$key]);
+
+			if (!Form::validate([$key => $rules], $errors, [$key => $this->$key]))
+			{
+				throw new User_Exception($this->_getErrorMessage($errors));
+			}
+		}
+	}
+
 	public function save(): bool
 	{
+		$this->selfCheck();
+
 		$db = DB::getInstance();
 
 		if (!$this->exists)
@@ -141,21 +163,14 @@ class Entity
 			throw new \LogicException('Can not delete an object that has not been saved');
 		}
 
-		if (DB::getInstance()->delete($this->table, 'id' , $this->id))
+		if (DB::getInstance()->delete($this->table, 'id = ?' , $this->id))
 		{
+			die('ok');
 			$this->exists = false;
 			return true;
 		}
 
 		return false;
-	}
-
-	public function list($page = 1)
-	{
-		$per_page = 50;
-		$begin = ($page - 1) * $per_page;
-
-		return DB::getInstance()->get('SELECT * FROM ' . $this->table . ' ORDER BY id DESC LIMIT ?,?;', $begin, $per_page);
 	}
 
 	public function getFields()
@@ -233,8 +248,8 @@ class Entity
 	 */
 	protected function _findAnnotations(): void
 	{
-		$class = new ReflectionClass($this);
-		$properties = $class->getProperties(ReflectionProperty::IS_PROTECTED);
+		$class = new ReflectionClass(static::class);
+		$properties = $class->getProperties(ReflectionProperty::IS_PUBLIC);
 
 		foreach ($properties as $property)
 		{
@@ -288,6 +303,60 @@ class Entity
 		foreach ($this->fields as $key => $value)
 		{
 			$out[$key] = $this->$key;
+		}
+
+		return $out;
+	}
+
+	public function getFormFields()
+	{
+		$form = [];
+
+		foreach ($this->fields as $key => $annotations)
+		{
+			$form[$key] = [
+				'input' => $annotations->field,
+				'name'  => $annotations->name,
+				'null'  => $annotations->null,
+			];
+		}
+
+		return $form;
+	}
+
+	static public function create()
+	{
+		$name = static::class;
+		$obj = new $name;
+
+		foreach ($obj->getFields() as $key => $annotations)
+		{
+			if (array_key_exists($key, $_POST))
+			{
+				$obj->set($key, $_POST[$key]);
+			}
+		}
+
+		return $obj;
+	}
+
+	static public function list(string $order = 'id'): array
+	{
+		$out = [];
+		$self = static::class;
+		$obj = new $self;
+		$list = DB::getInstance()->get('SELECT * FROM ' . $obj->table . ' ORDER BY ' . $order);
+
+		foreach ($list as $row)
+		{
+			$obj = new $self;
+
+			foreach ($row as $key=>$value)
+			{
+				$obj->$key = $value;
+			}
+
+			$out[] = $obj;
 		}
 
 		return $out;
