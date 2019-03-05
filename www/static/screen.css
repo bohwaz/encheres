@@ -141,3 +141,16 @@ ul.errors li {
 main .account article {
 	margin: 2em;
 }
+
+.adminList {
+	border-collapse: collapse;
+	margin: 1em;
+}
+
+.adminList td, .adminList th {
+	padding: .5em;
+}
+
+.adminList tr:nth-child(odd) {
+	background: #eee;
+}

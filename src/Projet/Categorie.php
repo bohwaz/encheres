@@ -10,7 +10,7 @@ class Categorie extends Entity
 	 * @var int
 	 * @primary
 	 */
-	public $id;
+	protected $id;
 
 	/**
 	 * @var string
@@ -18,5 +18,5 @@ class Categorie extends Entity
 	 * @field text
 	 * @name Nom de la catégorie
 	 */
-	public $nom;
+	protected $nom;
 }

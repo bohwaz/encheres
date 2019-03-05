@@ -29,10 +29,14 @@ class Produit extends Entity
 
 	/**
 	 * @var string
-	 * @field image
 	 * @null
 	 */
 	protected $image;
+
+	/**
+	 * @var int
+	 */
+	protected $categorie;
 
 	public function addImage(string $path): int
 	{

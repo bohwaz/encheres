@@ -76,6 +76,11 @@ abstract class Entity
 		$this->__set($key, $value);
 	}
 
+	public function __isset($key)
+	{
+		return property_exists($this, $key);
+	}
+
 	public function __get($key)
 	{
 		return $this->$key;
@@ -165,7 +170,6 @@ abstract class Entity
 
 		if (DB::getInstance()->delete($this->table, 'id = ?' , $this->id))
 		{
-			die('ok');
 			$this->exists = false;
 			return true;
 		}
@@ -249,7 +253,7 @@ abstract class Entity
 	protected function _findAnnotations(): void
 	{
 		$class = new ReflectionClass(static::class);
-		$properties = $class->getProperties(ReflectionProperty::IS_PUBLIC);
+		$properties = $class->getProperties(ReflectionProperty::IS_PROTECTED);
 
 		foreach ($properties as $property)
 		{
