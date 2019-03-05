@@ -78,11 +78,23 @@ class Produit extends Entity
 
 	public function deleteImage(int $id_image): int
 	{
+		unlink(sprintf(IMAGE_PATH, $id_image));
+		unlink(sprintf(THUMBNAIL_PATH, $id_image));
 		return DB::getInstance()->delete('images', 'id = ?', $id_image);
 	}
 
 	public function listImages(): array
 	{
 		return DB::getInstance()->get('SELECT * FROM images WHERE produit = ? ORDER BY id;', $this->id);
+	}
+
+	public function delete()
+	{
+		foreach ($this->listImages() as $img)
+		{
+			$this->deleteImage($img->id);
+		}
+
+		return parent::delete();
 	}
 }
