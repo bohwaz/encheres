@@ -35,7 +35,9 @@ class Produit extends Entity
 
 	/**
 	 * @var int
-	 * @todo ajouter support pour one-to-many
+	 * @field select
+	 * @references categories id nom
+	 * @name Catégorie
 	 */
 	protected $categorie;
 

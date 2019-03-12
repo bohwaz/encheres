@@ -329,10 +329,18 @@ abstract class Entity
 				'input' => $annotations->field,
 				'name'  => $annotations->name,
 				'null'  => $annotations->null,
+				'values'=> $annotations->field == 'select' ? $this->getValuesForReference($annotations->references) : null,
 			];
 		}
 
 		return $form;
+	}
+
+	protected function getValuesForReference($ref): array
+	{
+		list($table, $key, $name) = explode(' ', $ref);
+
+		return DB::getInstance()->getAssoc(sprintf('SELECT %s, %s FROM %s ORDER BY %s;', $key, $name, $table, $name));
 	}
 
 	static public function create()

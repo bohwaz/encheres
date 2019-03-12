@@ -4,6 +4,8 @@
 	<meta charset="utf-8" />
 	<title>{$site_title}</title>
 	<link rel="stylesheet" type="text/css" href="{$www_url}static/screen.css" />
+	<script type="text/javascript" src="{$www_url}static/global.js"></script>
+	<link rel="stylesheet" type="text/css" href="{$www_url}static/flatpickr.min.css" />
 </head>
 
 <body>

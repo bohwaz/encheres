@@ -10,7 +10,6 @@ require __DIR__ . '/_inc.php';
 if (form('add'))
 {
 	$p = Produit::create();
-	$p->set('categorie', (int) $_POST['categorie'] ?? null);
 	$p->save();
 	redirect('/admin/produits.php');
 }
@@ -24,5 +23,5 @@ elseif (!empty($_GET['delete']))
 
 $tpl->assign('list', Produit::list('id'));
 
-$tpl->assign('fields', (new Produit)->getFormFields() + ['categorie' => ['input' => 'select', 'values' => Categorie::listAssoc('id', 'nom'), 'name' => 'Catégorie']]);
+$tpl->assign('fields', (new Produit)->getFormFields());
 $tpl->display('admin/produits.tpl');
