@@ -14,7 +14,7 @@ $tpl->assign('www_url', '/');
 $tpl->assign('site_title', SITE_TITLE);
 
 $user = Membre::getLoggedUser();
-$user_is_admin = (bool) $user->admin;
+$user_is_admin = !empty($user->admin);
 
 $tpl->assign('user', $user ? $user->toArray() : null);
 $tpl->assign('is_admin', $user_is_admin);
@@ -33,6 +33,11 @@ function redirect($uri = '/')
 function form($id, array $rules = [])
 {
 	if ($_SERVER['REQUEST_METHOD'] != 'POST') return;
+
+	if (!isset($_POST[$id]))
+	{
+		return;
+	}
 
 	global $tpl, $form_errors;
 	return Form::check($id, $rules, $form_errors);
@@ -71,6 +76,7 @@ $tpl->register_function('form', function ($params, $tpl) {
 
 	$tpl->assign($params);
 	$tpl->assign('url_self', $_SERVER['REQUEST_URI']);
+	$tpl->assign('id', $params['id']);
 	$tpl->assign('csrf', Form::tokenHTML($params['id']));
 	return $tpl->fetch('_form.tpl');
 });

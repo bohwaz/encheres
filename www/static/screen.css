@@ -154,3 +154,13 @@ main .account article {
 .adminList tr:nth-child(odd) {
 	background: #eee;
 }
+
+.adminColumns {
+	display: flex;
+	width: 100%;
+}
+
+.adminColumn {
+	width: 40%;
+	margin: 5%;
+}

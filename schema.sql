@@ -9,10 +9,32 @@ CREATE TABLE IF NOT EXISTS membres (
 	credit INTEGER NOT NULL DEFAULT 1000
 );
 
+INSERT INTO membres VALUES (1, 'admin@admin.fr', '$2y$10$oguCg9RCbHrpYt1kREqBU.q1byKAyJWiw4jjq.k2LwbuHC1fOuMQG', 1, NOW(), 10000);
+
 CREATE TABLE IF NOT EXISTS categories (
 	id MEDIUMINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	nom VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS categories_details (
+	id SMALLINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	categorie MEDIUMINT UNSIGNED NULL,
+	nom VARCHAR(191) NOT NULL,
+	FOREIGN KEY (categorie) REFERENCES categories (id) ON DELETE SET NULL
+);
+
+INSERT INTO categories VALUES
+	(1, 'Téléphones'),
+	(2, 'Cartes cadeau'),
+	(3, 'Consoles');
+
+INSERT INTO categories_details VALUES
+	(1, 1, 'Taille d''écran'),
+	(2, 1, 'Batterie'),
+	(3, 1, 'Réseaux'),
+	(4, 2, 'Site marchand'),
+	(5, 3, 'Taille stockage'),
+	(6, 3, 'Nombre manettes');
 
 CREATE TABLE IF NOT EXISTS produits (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -27,9 +49,10 @@ CREATE TABLE IF NOT EXISTS produits (
 CREATE TABLE IF NOT EXISTS produits_details (
 	id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	produit INTEGER UNSIGNED NOT NULL,
-	nom VARCHAR(191) NOT NULL,
+	detail SMALLINT UNSIGNED NOT NULL,
 	valeur TEXT NOT NULL,
-	UNIQUE (produit, nom),
+	UNIQUE (produit, detail),
+	FOREIGN KEY (detail) REFERENCES categories_details (id) ON DELETE CASCADE,
 	FOREIGN KEY (produit) REFERENCES produits (id) ON DELETE CASCADE
 );
 

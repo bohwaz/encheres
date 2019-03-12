@@ -35,13 +35,9 @@ class Produit extends Entity
 
 	/**
 	 * @var int
+	 * @todo ajouter support pour one-to-many
 	 */
 	protected $categorie;
-
-	/**
-	 * @var array
-	 */
-	protected $proprietes;
 
 	public function addImage(string $path): int
 	{
@@ -109,5 +105,19 @@ class Produit extends Entity
 		}
 
 		return parent::delete();
+	}
+
+	public function listDetails(): array
+	{
+		return DB::getInstance()->get('SELECT pd.*, cd.nom
+			FROM produits_details AS pd
+			INNER JOIN categories_details AS cd ON pd.detail = cd.id
+			WHERE pd.produit = ?;', $this->id);
+	}
+
+	public function addDetail(int $id_detail, string $valeur)
+	{
+		return DB::getInstance()->preparedQuery('REPLACE INTO produits_details (produit, detail, valeur) VALUES (?, ?, ?);',
+			[$this->id, $id_detail, $valeur]);
 	}
 }

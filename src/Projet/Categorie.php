@@ -19,4 +19,9 @@ class Categorie extends Entity
 	 * @name Nom de la catégorie
 	 */
 	protected $nom;
+
+	public function listDetails(): array
+	{
+		return DB::getInstance()->getAssoc('SELECT id, nom FROM categories_details WHERE categorie = ?;', $this->id);
+	}
 }

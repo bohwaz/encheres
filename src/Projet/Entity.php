@@ -56,20 +56,23 @@ abstract class Entity
 			return;
 		}
 
-		$rules = $this->_getFieldRules($this->fields[$key]);
-
-		if (!Form::validate([$key => $rules], $errors, [$key => $value]))
+		if (isset($this->fields[$key]))
 		{
-			throw new User_Exception($this->_getErrorMessage($errors));
-		}
+			$rules = $this->_getFieldRules($this->fields[$key]);
 
-		if ($this->fields[$key]->unique)
-		{
-			$db = DB::getInstance();
-
-			if ($db->test($this->table, $db->quoteIdentifier($key) . ' = ?', $value))
+			if (!Form::validate([$key => $rules], $errors, [$key => $value]))
 			{
-				throw new User_Exception($this->getErrorValidationMessage('unique', $this->fields[$key]->name));
+				throw new User_Exception($this->_getErrorMessage($errors));
+			}
+
+			if ($this->fields[$key]->unique)
+			{
+				$db = DB::getInstance();
+
+				if ($db->test($this->table, $db->quoteIdentifier($key) . ' = ?', $value))
+				{
+					throw new User_Exception($this->getErrorValidationMessage('unique', $this->fields[$key]->name));
+				}
 			}
 		}
 
@@ -124,6 +127,10 @@ abstract class Entity
 	{
 		foreach ($this->fields as $key=>$annotations)
 		{
+			if (!isset($this->fields[$key])) {
+				continue;
+			}
+
 			$rules = $this->_getFieldRules($this->fields[$key]);
 
 			if (!Form::validate([$key => $rules], $errors, [$key => $this->$key]))
@@ -344,12 +351,13 @@ abstract class Entity
 		return $obj;
 	}
 
-	static public function list(string $order = 'id'): array
+	static protected function populateFromQuery($query)
 	{
 		$out = [];
 		$self = static::class;
 		$obj = new $self;
-		$list = DB::getInstance()->get('SELECT * FROM ' . $obj->table . ' ORDER BY ' . $order);
+		$query = str_replace('__table', $obj->table, $query);
+		$list = DB::getInstance()->get($query);
 
 		foreach ($list as $row)
 		{
@@ -364,5 +372,18 @@ abstract class Entity
 		}
 
 		return $out;
+	}
+
+	static public function list(string $order = 'id'): array
+	{
+		return self::populateFromQuery('SELECT * FROM __table ORDER BY ' . $order);
+	}
+
+	static public function listAssoc($key = 'id', $value)
+	{
+		$self = static::class;
+		$obj = new $self;
+
+		return DB::getInstance()->getAssoc(sprintf('SELECT %s, %s FROM %s ORDER BY %2$s;', $key, $value, $obj->table));
 	}
 }
