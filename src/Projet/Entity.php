@@ -19,6 +19,7 @@ abstract class Entity
 		'unique' => false,
 		'trim'   => false,
 		'default'=> null,
+		'references' => null,
 	];
 
 	protected $modified = [];
@@ -256,6 +257,7 @@ abstract class Entity
 
 	/**
 	 * Finds all properties of the object and their annotations
+	 * @todo This should be done once and cached, instead of once at each instance creation
 	 */
 	protected function _findAnnotations(): void
 	{

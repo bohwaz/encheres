@@ -33,7 +33,9 @@ Un compte administrateur par défaut a été ajouté et peut être utilisé avec
 * E-mail: admin@admin.fr
 * Mot de passe: abcd
 
-## Arborescence
+## Architecture du code
+
+### Arborescence
 
 Le projet est conçu autour d'un modèle MVC :
 
@@ -59,7 +61,7 @@ Les fichiers suivants existent également à la racine :
 * `run_tests.php` lance les tests unitaires
 * `template.php` configure le moteur de template et y ajoute quelques fonctions utiles pour ce projet
 
-## Architecture du code
+### Dépendances
 
 Le projet se base sur un ensemble de bibliothèques que j'ai développées depuis 2003, regroupées dans le projet [KD2FW](https://fossil.kd2.org/kd2fw/wiki?name=about). Dans ce projet sont utilisées les bibliothèques suivantes :
 
@@ -70,3 +72,21 @@ Le projet se base sur un ensemble de bibliothèques que j'ai développées depui
 * Image, qui permet d'identifier, redimensionner et appliquer divers traitements à des images
 
 Ces dépendances sont situées dans le répertoire `vendor/KD2/`
+
+### Méta-modélisation et entités
+
+Chacun des modèles (classe) étend la classe `Entity`. Cette classe représente une entité et permet de méta-modéliser de manière générique chacune des entités (un produit, une catégorie, une enchère… = une entité).
+
+Les propriétés de chaque entité sont représentées sous la forme de variables d'objet (qui sont protégées). Chaque propriété correspond à une colonne dans la table MySQL correspondante.
+
+Chaque propriété d'objet reçoit des annotations, présentes dans le docblock (bloc de commentaire de documentation) précédant la proprité, permettant d'indiquer les spécificités de la propriété. Les spécificités possibles sont les suivantes :
+
+* `@field` indique le type de champ utilisé dans un formulaire d'ajout / modification de l'entité
+* `@name` est l'intitulé de la propriété
+* `@unique` indique que cette propriété est une clé unique dans la table
+* `@null` indique que cette propriété peut rester vide (NULL)
+* `@references` indique que le champ référence une autre table
+
+Ces spécificités (ou annotations) permettent de construire et valider les formulaires liés aux entités.
+
+Les méthodes d'objet d'une entité s'appliquent à une entité spécifique (création, modification, suppression, lecture, etc.) alors que les méthodes de classe (statiques) d'une entité s'appliquent à toutes les entités (par exemple : liste des entités, recherche, etc.).

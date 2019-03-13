@@ -51,4 +51,9 @@ class Enchere extends Entity
 	{
 		return self::populateFromQuery('SELECT *, p.nom AS nom FROM __table INNER JOIN produits AS p ON p.id = __table.produit ORDER BY __table.' . $order);
 	}
+
+	static public function listEncheresCourantes(): array
+	{
+		return self::populateFromQuery('SELECT * FROM liste_encheres_courantes;');
+	}
 }
