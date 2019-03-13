@@ -15,7 +15,7 @@ class Produit extends Entity
 
 	/**
 	 * @var string
-	 * @field tinytext
+	 * @field text
 	 * @name Nom du produit
 	 */
 	protected $nom;

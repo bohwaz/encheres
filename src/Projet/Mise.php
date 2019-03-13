@@ -5,19 +5,40 @@ namespace Projet;
 use DateTime;
 use stdClass;
 
-class Mises
+class Mise extends Entity
 {
-	public function listForEnchereAndUser(int $enchere, int $utilisateur): array
-	{
-		return DB::getInstance()->get('SELECT * FROM mes_mises WHERE enchere = ? AND utilisateur = ?;', $enchere, $utilisateur);
-	}
+	/**
+	 * @var int
+	 */
+	protected $id;
 
-	public function add(int $enchere, int $utilisateur, int $montant): bool
-	{
-		return $this->addRange($enchere, $utilisateur, $montant, $montant);
-	}
+	/**
+	 * @var int
+	 * @references utilisateurs id email
+	 */
+	protected $utilisateur;
 
-	public function addRange(int $enchere, int $utilisateur, int $start, int $end): bool
+	/**
+	 * @var int
+	 * @references encheres id id
+	 */
+	protected $enchere;
+
+	/**
+	 * @var int
+	 * @field money
+	 * @name Montant de la mise
+	 */
+	protected $montant;
+
+	/**
+	 * @var DateTime
+	 * @default now
+	 * @name Date de la mise
+	 */
+	protected $date;
+
+	static public function addRange(int $enchere, int $utilisateur, int $start, int $end): bool
 	{
 		$db = DB::getInstance();
 		$db->begin();
@@ -37,10 +58,5 @@ class Mises
 		$db->preparedQuery('UPDATE membres SET credit = credit - ? WHERE id = ?;', [$cout, $utilisateur]);
 
 		return $db->commit();
-	}
-
-	public function getWinner(int $enchere): ?stdClass
-	{
-		return DB::getInstance()->first('SELECT * FROM mise_gagnante WHERE enchere = ?;', $enchere);
 	}
 }

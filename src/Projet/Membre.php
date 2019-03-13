@@ -27,7 +27,7 @@ class Membre extends Entity
 
 	/**
 	 * @var integer
-	 * @field number
+	 * @field money
 	 * @name Crédit
 	 */
 	protected $credit = 0;
