@@ -20,46 +20,6 @@ $tpl->assign('user', $user ? $user->toArray() : null);
 $tpl->assign('is_admin', $user_is_admin);
 $tpl->assign('is_logged', (bool) $user);
 
-$form_errors = [];
-
-// Fonctions utilitaires
-
-function redirect($uri = '/')
-{
-	header('Location: ' . $uri);
-	exit;
-}
-
-function form($id, array $rules = [])
-{
-	if ($_SERVER['REQUEST_METHOD'] != 'POST') return;
-
-	if (!isset($_POST[$id]))
-	{
-		return;
-	}
-
-	global $tpl, $form_errors;
-	return Form::check($id, $rules, $form_errors);
-}
-
-function form_fields(array $fields = [])
-{
-	extract($_POST);
-	return compact($fields);
-}
-
-function form_field($name)
-{
-	return $_POST[$name] ?? null;
-}
-
-function form_error($message)
-{
-	global $form_errors;
-	$form_errors[] = $message;
-}
-
 $tpl->register_function('form', function ($params, $tpl) {
 	foreach ($params['fields'] as $key => &$field)
 	{
