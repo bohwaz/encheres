@@ -1,7 +1,7 @@
 (function () {
 	var loaded = [];
 
-	require = function (name, callback) {
+	var require = function (name, callback) {
 		if (loaded.indexOf(name) != -1) {
 			return callback();
 		}
@@ -16,6 +16,11 @@
 		return;
 	};
 
+	var updateSession = function () {
+		var img = new Image(1, 1);
+		img.src = '/admin/login.php?refresh=' + (+new Date);
+	};
+
 	document.addEventListener('DOMContentLoaded', function() {
 		var inputs = document.querySelectorAll('input[type="datetime"]');
 
@@ -23,10 +28,13 @@
 		{
 			require('flatpickr', function () {
 				for (var i = 0; i < inputs.length; i++) {
-					console.log(inputs[i]);
 					flatpickr(inputs[i], {enableTime: true, time_24hr: true, inline: true});
 				}
 			});
+		}
+
+		if (document.body.getAttribute('data-logged')) {
+			window.setInterval(updateSession, 1000*60*10);
 		}
 	});
 }());

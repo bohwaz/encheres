@@ -4,6 +4,20 @@ require __DIR__ . '/../../bootstrap.php';
 
 use Projet\Membre;
 
+if (!empty($_GET['refresh']))
+{
+	// Rafraîchir la session
+	Membre::refresh();
+
+    header('Cache-Control: no-cache, must-revalidate');
+    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+
+    header('Content-Type: image/gif');
+    echo base64_decode("R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==");
+
+    exit;
+}
+
 $form_rules = [
 	'email' => 'required|email',
 	'passe' => 'required',

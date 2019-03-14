@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="{$www_url}static/flatpickr.min.css" />
 </head>
 
-<body>
+<body{if $is_logged} data-logged="yes"{/if}>
 
 <header class="head">
 	<h1><a href="{$www_url}">{$site_title}</a></h1>
