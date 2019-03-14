@@ -1,7 +1,5 @@
 <?php declare(strict_types=1);
 
-namespace Projet;
-
 use KD2\ErrorManager as EM;
 use KD2\Form;
 
@@ -25,8 +23,6 @@ spl_autoload_register(function (string $class): void {
 
 	require $path;
 });
-
-class User_Exception extends \RuntimeException {}
 
 define('ROOT', __DIR__);
 
