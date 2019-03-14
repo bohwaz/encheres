@@ -50,6 +50,10 @@ $tpl->register_function('form', function ($params, $tpl) {
 				$field['value'] = sprintf('%d.%02d', $field['value'] / 100, $field['value'] % 100);
 			}
 		}
+
+		if (is_object($field['value']) && $field['value'] instanceof \DateTime) {
+			$field['value'] = $field['value']->format($field['input'] == 'date' ? 'd/m/Y' : 'd/m/Y H:i:s');
+		}
 	}
 
 	$tpl->assign($params);

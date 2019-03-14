@@ -34,14 +34,14 @@ class Enchere extends Entity
 	protected $cout_mise;
 
 	/**
-	 * @var date
+	 * @var DateTime
 	 * @field datetime
 	 * @name Date de début de l'enchère
 	 */
 	protected $date_debut;
 
 	/**
-	 * @var date
+	 * @var DateTime
 	 * @field datetime
 	 * @name Date de fin de l'enchère
 	 */

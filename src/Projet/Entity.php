@@ -177,7 +177,7 @@ abstract class Entity
 	{
 		if (!$this->exists)
 		{
-			throw new \LogicException('Can not delete an object that has not been saved');
+			throw new \LogicException('Cannot delete an object that has not been saved');
 		}
 
 		if (DB::getInstance()->delete($this->table, 'id = ?' , $this->id))
@@ -395,8 +395,17 @@ abstract class Entity
 
 			foreach ($row as $key=>$value)
 			{
-				$obj->$key = $value;
+				if (isset($obj->fields[$key]))
+				{
+					$obj->$key = $obj->_getFieldValue($value, $obj->fields[$key]);
+				}
+				else
+				{
+					$obj->$key = $value;
+				}
 			}
+
+			$obj->modified = [];
 
 			$out[] = $obj;
 		}
