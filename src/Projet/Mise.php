@@ -45,8 +45,8 @@ class Mise extends Entity
 		$db = DB::getInstance();
 		$db->begin();
 
-		$values = compact('enchere', 'utilisateur', 'montant');
-		$st = $db->prepare('INSERT INTO mises VALUES (:enchere, :utilisateur, :montant, NOW());');
+		$values = compact('enchere', 'utilisateur');
+		$st = $db->prepare('INSERT INTO mises (enchere, membre, montant, `date`) VALUES (:enchere, :utilisateur, :montant, NOW());');
 
 		for ($i = $start; $i <= $end; $i++)
 		{

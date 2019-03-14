@@ -25,8 +25,6 @@ $tpl->register_function('form', function ($params, $tpl) {
 
 	foreach ($params['fields'] as $key => &$field)
 	{
-		$field['value'] = null;
-
 		if (isset($_POST[$key]))
 		{
 			$field['value'] = $_POST[$key];
@@ -45,13 +43,13 @@ $tpl->register_function('form', function ($params, $tpl) {
 			$field['min'] = '0.01';
 			$field['step'] = '0.01';
 
-			if (!isset($_POST[$key]))
+			if (!isset($_POST[$key]) && isset($field['value']))
 			{
 				$field['value'] = sprintf('%d.%02d', $field['value'] / 100, $field['value'] % 100);
 			}
 		}
 
-		if (is_object($field['value']) && $field['value'] instanceof \DateTime) {
+		if (isset($field['value']) && is_object($field['value']) && $field['value'] instanceof \DateTime) {
 			$field['value'] = $field['value']->format($field['input'] == 'date' ? 'd/m/Y' : 'd/m/Y H:i:s');
 		}
 	}
@@ -89,4 +87,9 @@ $tpl->register_modifier('image_thumb_url', function ($id) {
 	$path = sprintf(THUMBNAIL_PATH, $id);
 	$path = str_replace(ROOT . '/www', '', $path);
 	return $path;
+});
+
+$tpl->register_modifier('temps_restant', function ($date) {
+	$interval = $date->diff(new \DateTime);
+	return $interval->format('%d jours %H heures %I minutes %S secondes');
 });
