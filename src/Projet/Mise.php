@@ -7,6 +7,8 @@ use stdClass;
 
 class Mise extends Entity
 {
+	protected $table = 'mises';
+
 	/**
 	 * @var int
 	 */

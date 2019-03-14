@@ -21,16 +21,34 @@ $tpl->assign('is_admin', $user_is_admin);
 $tpl->assign('is_logged', (bool) $user);
 
 $tpl->register_function('form', function ($params, $tpl) {
+	$source = isset($params['source']) ? is_object($params['source']) : null;
+
 	foreach ($params['fields'] as $key => &$field)
 	{
-		if (isset($params['source'][$key]))
-		{
-			$field['value'] = $params['source'][$key];
-		}
+		$field['value'] = null;
 
 		if (isset($_POST[$key]))
 		{
 			$field['value'] = $_POST[$key];
+		}
+		elseif (isset($params['source']) && is_object($params['source']) && isset($params['source']->$key))
+		{
+			$field['value'] = $params['source']->$key;
+		}
+		elseif (isset($params['source']) && is_array($params['source']) && isset($params['source'][$key]))
+		{
+			$field['value'] = $params['source'][$key];
+		}
+
+		if ($field['input'] == 'money') {
+			$field['input'] = 'number';
+			$field['min'] = '0.01';
+			$field['step'] = '0.01';
+
+			if (!isset($_POST[$key]))
+			{
+				$field['value'] = sprintf('%d.%02d', $field['value'] / 100, $field['value'] % 100);
+			}
 		}
 	}
 

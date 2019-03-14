@@ -5,6 +5,7 @@
 	<tr>
 		<th>{$item.nom}</th>
 		<td>{$item.nb_mises} mises</td>
+		<td>Fin : {$item.date_fin}</td>
 		<td><a href="{$www_url}admin/enchere.php?id={$item.id}">Gérer</a></td>
 		<td><a href="?delete={$item.id}">Supprimer</a></td>
 	</tr>

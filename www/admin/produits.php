@@ -9,7 +9,7 @@ require __DIR__ . '/_inc.php';
 
 if (form('add'))
 {
-	$p = Produit::create();
+	$p = Produit::createFromForm();
 	$p->save();
 	redirect('/admin/produits.php');
 }

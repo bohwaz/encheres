@@ -128,4 +128,17 @@ class Membre extends Entity
 		$this->__set('credit', $this->credit + $amount);
 		return $this->save();
 	}
+
+	static public function refresh(): void
+	{
+		if (!isset($_COOKIE[session_name()]))
+		{
+			return;
+		}
+
+		if (!isset($_SESSION))
+		{
+			session_start();
+		}
+	}
 }

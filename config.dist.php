@@ -1,9 +1,9 @@
 <?php
 
 const MYSQL_HOST = 'localhost';
-const MYSQL_USER = 'test';
-const MYSQL_PASS = 'test';
-const MYSQL_DATABASE = 'test';
+const MYSQL_USER = 'test_encheres';
+const MYSQL_PASS = 'abcd';
+const MYSQL_DATABASE = 'test_encheres';
 
 const SITE_TITLE = 'EnchèresInversées.com';
 const SITE_EMAIL = 'contact@encheres.com';

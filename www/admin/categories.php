@@ -8,7 +8,7 @@ require __DIR__ . '/_inc.php';
 
 if (form('add'))
 {
-	$categorie = Categorie::create();
+	$categorie = Categorie::createFromForm();
 	$categorie->save();
 	redirect('/admin/categories.php');
 }

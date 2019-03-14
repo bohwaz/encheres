@@ -1,6 +1,7 @@
 {include file="_head.tpl" title="Catégorie: %s"|args:$produit.nom}
 
-	{form_errors}
+{form_errors}
+
 <div class="adminColumns">
 
 	<div class="adminColumn">
@@ -34,5 +35,6 @@
 
 		{form legend="Ajouter un détail" submit="Ajouter" fields=$detail_fields id="add_detail"}
 	</div>
+</div>
 
 {include file="_foot.tpl"}

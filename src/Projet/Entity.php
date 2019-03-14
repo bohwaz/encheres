@@ -61,6 +61,10 @@ abstract class Entity
 		{
 			$rules = $this->_getFieldRules($this->fields[$key]);
 
+			if ($this->fields[$key]->field == 'money') {
+				$value = (int) ($value * 100);
+			}
+
 			if (!Form::validate([$key => $rules], $errors, [$key => $value]))
 			{
 				throw new User_Exception($this->_getErrorMessage($errors));
@@ -221,6 +225,9 @@ abstract class Entity
 			case 'number':
 				$rules['numeric'] = [];
 				 break;
+			case 'datetime':
+				$rules['date'] = [];
+				break;
 		}
 
 		return $rules;
@@ -345,7 +352,7 @@ abstract class Entity
 		return DB::getInstance()->getAssoc(sprintf('SELECT %s, %s FROM %s ORDER BY %s;', $key, $name, $table, $name));
 	}
 
-	static public function create()
+	static public function createFromForm()
 	{
 		$name = static::class;
 		$obj = new $name;
@@ -361,13 +368,26 @@ abstract class Entity
 		return $obj;
 	}
 
+	public function updateFromForm()
+	{
+		foreach ($this->getFields() as $key => $annotations)
+		{
+			if (array_key_exists($key, $_POST))
+			{
+				$this->set($key, $_POST[$key]);
+			}
+		}
+
+		return $this;
+	}
+
 	static protected function populateFromQuery($query)
 	{
 		$out = [];
 		$self = static::class;
 		$obj = new $self;
 		$query = str_replace('__table', $obj->table, $query);
-		$list = DB::getInstance()->get($query);
+		$list = call_user_func_array([DB::getInstance(), 'get'], [$query] + func_get_args());
 
 		foreach ($list as $row)
 		{
