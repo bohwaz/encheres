@@ -32,5 +32,6 @@ $tpl->assign('enchere', $enchere);
 $tpl->assign('produit', $produit);
 $tpl->assign('images', $produit->listImages());
 $tpl->assign('details', $produit->listDetails());
+$tpl->assign('mes_mises', $enchere->listMisesForUser($user));
 
 $tpl->display('enchere.tpl');

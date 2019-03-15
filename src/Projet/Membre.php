@@ -43,8 +43,9 @@ class Membre extends Entity
 	 * @var bool
 	 * @field checkbox
 	 * @name Administrateur
+	 * @default 0
 	 */
-	protected $admin;
+	protected $admin = 0;
 
 	static public function login(string $email, string $password): bool
 	{

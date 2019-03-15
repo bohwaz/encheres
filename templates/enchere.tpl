@@ -2,10 +2,7 @@
 
 <section class="enchere">
 
-	<article class="produit">
-		<figure class="main">
-			<a href="{$produit.image|image_url}" target="_blank"><img src="{$produit.image|image_thumb_url}" alt="" /></a>
-		</figure>
+	<article class="produit" style="background-image: linear-gradient(to top, rgba(255,255,255,1) 20%,rgba(255,255,255,0) 150%), url('{$produit.image|image_url|escape:url}');">
 		<h2>{$produit.nom}</h2>
 		<h3>Prix public : {$enchere.prix_public|money}</h3>
 
@@ -21,6 +18,8 @@
 			<dd>{$detail.valeur}</dd>
 		{/foreach}
 		</dl>
+
+		<p>{$produit.description|escape|nl2br}</p>
 	</article>
 
 	<article class="miser">
@@ -30,6 +29,26 @@
 
 		{form_errors}
 		{form legend="Placer une offre" submit="Placer" fields=$mise_fields id="make_offer"}
+	</article>
+
+	<article class="mises">
+		<h2>Mes mises</h2>
+		<table>
+			{foreach from=$mes_mises item="mise"}
+			<tr>
+				<th>{$mise.montant|money}</th>
+				<td>
+					{if $mise.statut == 'gagnante'}
+						<strong>Mise gagnante&nbsp;!</strong>
+					{elseif $mise.statut == 'unique'}
+						Mise unique (non gagnante)
+					{else}
+						Mise non-unique
+					{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</table>
 	</article>
 
 </section>

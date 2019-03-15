@@ -70,12 +70,12 @@ class Enchere extends Entity
 
 	public function listMises(): array
 	{
-		return Mise::populateFromQuery('SELECT montant, COUNT(*) AS nb FROM mises WHERE enchere = ? GROUP BY montant ORDER BY montant ASC;', $this->id);
+		return Mise::populateFromQuery('SELECT * FROM mises_statuts WHERE enchere = ?;', $this->id);
 	}
 
 	public function listMisesForUser(Membre $membre): array
 	{
-		return Mise::populateFromQuery('SELECT * FROM mes_mises WHERE enchere = ? AND utilisateur = ?;', $this->id, $membre->id);
+		return Mise::populateFromQuery('SELECT * FROM mises_statuts WHERE enchere = ? AND montant IN (SELECT montant FROM mises WHERE membre = ? AND enchere = ?);', $this->id, $membre->id, $this->id);
 	}
 
 	public function selfCheck(): void

@@ -33,6 +33,11 @@ Un compte administrateur par défaut a été ajouté et peut être utilisé avec
 * E-mail: admin@admin.fr
 * Mot de passe: abcd
 
+Un autre compte utilisateur est disponible :
+
+* E-mail : utilisateur@mail.com
+* Mot de passe : abcd
+
 ## Architecture du code
 
 ### Arborescence

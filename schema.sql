@@ -99,21 +99,31 @@ CREATE TRIGGER encheres_nombre_mises_sub AFTER DELETE ON mises
 //
 DELIMITER ;
 
-DROP VIEW IF EXISTS mise_gagnante;
+DROP VIEW IF EXISTS mises_gagnantes;
 
-CREATE VIEW mise_gagnante AS
-	SELECT *
+CREATE VIEW mises_gagnantes AS
+	SELECT *, 'gagnante' AS statut, 1 AS nb_mises
 	FROM mises
 	GROUP BY enchere, montant
 	HAVING COUNT(montant) = 1
 	ORDER BY montant LIMIT 1;
 
-DROP VIEW IF EXISTS mes_mises;
+DROP VIEW IF EXISTS mises_uniques;
 
-CREATE VIEW mes_mises AS
-	SELECT *, COUNT(id) AS nb_mises
+CREATE VIEW mises_uniques AS
+	SELECT *, 'unique' AS statut, 1 AS nb_mises
 	FROM mises
 	GROUP BY enchere, montant
+	HAVING COUNT(montant) = 1
+	ORDER BY montant;
+
+DROP VIEW IF EXISTS mises_multiples;
+
+CREATE VIEW mises_multiples AS
+	SELECT *, 'multiple' AS statut, COUNT(montant) AS nb_mises
+	FROM mises
+	GROUP BY enchere, montant
+	HAVING COUNT(montant) > 1
 	ORDER BY montant;
 
 DROP VIEW IF EXISTS liste_encheres_courantes;
@@ -127,11 +137,12 @@ CREATE VIEW liste_encheres_courantes AS
 	ORDER BY e.date_fin DESC;
 
 -- SELECT * FROM mises_statuts WHERE user = ? AND enchere = ?
---CREATE VIEW mises_statuts AS
---	SELECT * FROM (
---		SELECT *, "unique" AS statut FROM mises_uniques
---		UNION SELECT *, "multiple" AS statut FROM mises_multiples
---		UNION SELECT *, "gagnante" AS statut FROM mises_gagnantes)
---	ORDER BY montant;
+DROP VIEW IF EXISTS mises_statuts;
+CREATE VIEW mises_statuts AS
+	SELECT * FROM mises_multiples
+	UNION SELECT * FROM mises_uniques
+	UNION SELECT * FROM mises_gagnantes
+	GROUP BY montant
+	ORDER BY montant;
 
 SET FOREIGN_KEY_CHECKS=1;

@@ -256,7 +256,7 @@ abstract class Entity
 
 		foreach ($errors as $error)
 		{
-			$messages = self::getErrorValidationMessage($error['rule'], $this->fields[$error['name']]->name);
+			$messages[] = self::getErrorValidationMessage($error['rule'], $this->fields[$error['name']]->name);
 		}
 
 		return implode("\n", $messages);

@@ -164,3 +164,103 @@ main .account article {
 	width: 40%;
 	margin: 5%;
 }
+
+section.encheres {
+}
+
+section.encheres article {
+	background: #eee;
+	padding: .5em;
+	margin: 1em;
+	overflow: auto;
+}
+
+section.encheres img {
+	float: left;
+	margin: .5em;
+}
+
+section.encheres a {
+	text-decoration: none;
+	color: darkblue;
+}
+
+section.encheres a h3 {
+	font-size: 2em;
+}
+
+section.encheres a h4 {
+	font-style: italic;
+}
+
+section.encheres dl {
+	display: flex;
+	width: 20em;
+	flex-wrap: wrap;
+	text-decoration: .9em;
+	color: #666;
+}
+
+section.encheres dl dt, section.encheres dl dd {
+	flex: 50%;
+	margin: .5em 0;
+}
+
+.enchere {
+	display: flex;
+}
+
+.enchere .produit, .enchere .miser, .enchere .mises {
+	flex: 33%;
+	margin: 1em;
+}
+
+.enchere .produit {
+	border: 1px solid #ccc;
+	overflow: auto;
+	background-size: cover, cover;
+	padding: .5em;
+}
+
+
+.enchere .produit h2 {
+	font-weight: bold;
+	font-size: 4em;
+	text-shadow: 2px 2px 5px #999;
+}
+
+.enchere .produit .image {
+	margin: .3em;
+	float: right;
+	clear: right;
+}
+
+.enchere .produit .image img {
+	border: 1px solid #999;
+	width: 150px;
+	transition: border .5s, opacity .5s;
+}
+
+.enchere .produit .image img:hover {
+	border-color: darkred;
+	opacity: 0.8;
+}
+
+.enchere .produit dl {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.enchere .produit dt {
+	font-size: .9em;
+	flex: 40%;
+	text-align: right;
+	line-height: 1.8em;
+	margin-right: .5em;
+}
+
+.enchere .produit dd {
+	font-size: 1.2em;
+	flex: 50%;
+	margin: 0;
+}

@@ -9,7 +9,8 @@
 			{foreach from=$mises item="item"}
 			<tr>
 				<th>{$item.montant|money}</th>
-				<td>{$item.nb} mises</td>
+				<td>{$item.nb_mises} mises</td>
+				<td>{$item.statut}</td>
 			</tr>
 			{foreachelse}
 			<tr>
