@@ -161,10 +161,10 @@ CREATE VIEW mises_multiples AS
 	HAVING COUNT(montant) > 1
 	ORDER BY montant;
 
-DROP VIEW IF EXISTS liste_encheres_courantes;
+DROP VIEW IF EXISTS liste_encheres;
 
 CREATE VIEW liste_encheres AS
-	SELECT p.id AS pid, p.nom, e.*, c.nom AS nom_categorie, p.image
+	SELECT p.id AS pid, p.nom, e.*, c.id AS cid, c.nom AS nom_categorie, p.image
 	FROM produits AS p
 	INNER JOIN encheres AS e ON e.produit = p.id
 	INNER JOIN categories AS c ON c.id = p.categorie

@@ -24,4 +24,27 @@ class Categorie extends Entity
 	{
 		return DB::getInstance()->getAssoc('SELECT id, nom FROM categories_details WHERE categorie = ?;', $this->id);
 	}
+
+
+	static public function listAllPossibleDetails(): array
+	{
+		$details = DB::getInstance()->get('SELECT cd.categorie AS cid, cd.nom, pd.valeur FROM produits_details pd INNER JOIN categories_details cd ON cd.id = pd.detail GROUP BY cd.categorie, cd.nom, pd.valeur ORDER BY cd.nom, pd.valeur;');
+
+		$out = [];
+
+		foreach ($details as $detail)
+		{
+			if (!isset($out[$detail->cid])) {
+				$out[$detail->cid] = [];
+			}
+
+			if (!isset($out[$detail->cid][$detail->nom])) {
+				$out[$detail->cid][$detail->nom] = [];
+			}
+
+			$out[$detail->cid][$detail->nom][] = $detail->valeur;
+		}
+
+		return $out;
+	}
 }

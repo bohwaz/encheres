@@ -1,6 +1,10 @@
 {include file="_head.tpl"}
 
-<h2>Enchères</h2>
+{if isset($_GET['ended'])}
+	<h2>Enchères terminées</h2>
+{else}
+	<h2>Enchères en cours</h2>
+{/if}
 
 <section class="encheres">
 	{foreach from=$encheres item="e"}

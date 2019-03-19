@@ -86,4 +86,27 @@ class Enchere extends Entity
 			throw new User_Exception('La date de fin ne peut être avant la date de début');
 		}
 	}
+
+	static public function searchWithDetails(int $categorie, array $details): array
+	{
+		$criterias = [];
+		$db = DB::getInstance();
+
+		foreach ($details as $name => $value)
+		{
+			if (trim($value) === '') {
+				continue;
+			}
+
+			$criterias[] = sprintf('(%s AND %s)', $db->where('cd.nom', '=', $name), $db->where('pd.valeur', '=', $value));
+		}
+
+		$criterias = implode(' OR ', $criterias);
+
+		return self::populateFromQuery('SELECT * FROM liste_encheres WHERE cid = ? AND pid IN (
+			SELECT pd.produit FROM produits_details AS pd
+			INNER JOIN categories_details AS cd ON cd.id = pd.detail
+			WHERE (' . $criterias . ') GROUP BY pd.produit
+		);', $categorie);
+	}
 }
