@@ -28,10 +28,13 @@ $fields = [
 
 $tpl->assign('mise_fields', $fields);
 
+//var_dump($enchere->date_fin > (new DateTime) && $enchere->date_debut < (new DateTime)); exit;
+
 $tpl->assign('enchere', $enchere);
 $tpl->assign('produit', $produit);
 $tpl->assign('images', $produit->listImages());
 $tpl->assign('details', $produit->listDetails());
 $tpl->assign('mes_mises', $enchere->listMisesForUser($user));
+$tpl->assign('now', new DateTime);
 
 $tpl->display('enchere.tpl');

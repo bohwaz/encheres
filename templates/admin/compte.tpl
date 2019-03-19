@@ -5,7 +5,7 @@
 		<h2>Mon compte</h2>
 		<ul>
 			<li>E-Mail : {$user.email}</li>
-			<li>Crédit : {$user.credit|money}</li>
+			<li>Crédit : {$user.credit|raw|money}</li>
 		</ul>
 	</article>
 </section>

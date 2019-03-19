@@ -13,12 +13,12 @@
 			</a>
 		</header>
 		<dl>
-			<dt>Fin de l'enchère :</dt>
+			<dt>Fin de l'enchère&nbsp;:</dt>
 			<dd>{$e.date_fin|date_format:"%d/%m/%Y %H:%M"}</dd>
-			<dt>Prix public :</dt>
-			<dd>{$e.prix_public|money}</dd>
-			<dt>Coût d'une enchère :</dt>
-			<dd>{$e.cout_mise|money}</dd>
+			<dt>Prix public&nbsp;:</dt>
+			<dd>{$e.prix_public|raw|money}</dd>
+			<dt>Coût d'une enchère&nbsp;:</dt>
+			<dd>{$e.cout_mise|raw|money}</dd>
 		</dl>
 	</article>
 	{/foreach}

@@ -8,8 +8,7 @@
 		<table class="adminList">
 			{foreach from=$mises item="item"}
 			<tr>
-				<th>{$item.montant|money}</th>
-				<td>{$item.nb_mises} mises</td>
+				<th>{$item.montant|raw|money}</th>
 				<td>{$item.statut}</td>
 			</tr>
 			{foreachelse}

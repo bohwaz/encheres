@@ -42,6 +42,7 @@ $tpl->register_function('form', function ($params, $tpl) {
 			$field['input'] = 'number';
 			$field['min'] = '0.01';
 			$field['step'] = '0.01';
+			$field['post_label'] = '€';
 
 			if (!isset($_POST[$key]) && isset($field['value']))
 			{
@@ -74,7 +75,7 @@ $tpl->register_function('form_errors', function ($params, $tpl) {
 });
 
 $tpl->register_modifier('money', function ($amount) {
-	return sprintf('%d,%02d €', $amount / 100, $amount % 100);
+	return sprintf('%d,%02d&nbsp;€', $amount / 100, $amount % 100);
 });
 
 $tpl->register_modifier('image_url', function ($id) {

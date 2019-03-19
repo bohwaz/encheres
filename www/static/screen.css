@@ -208,10 +208,17 @@ section.encheres dl dt, section.encheres dl dd {
 
 .enchere {
 	display: flex;
+	align-items:flex-start;
+	align-content:flex-start;
 }
 
-.enchere .produit, .enchere .miser, .enchere .mises {
-	flex: 33%;
+.enchere .produit {
+	flex: 50%;
+	margin: 1em;
+}
+
+.enchere .miser, .enchere .mises {
+	flex: 30%;
 	margin: 1em;
 }
 
@@ -263,4 +270,24 @@ section.encheres dl dt, section.encheres dl dd {
 	font-size: 1.2em;
 	flex: 50%;
 	margin: 0;
+}
+
+.enchere .miser form {
+	margin-top: 2em;
+}
+
+.enchere .miser > h2, .enchere .miser > h3, .enchere .miser > h4, .enchere .mises h2 {
+	margin-bottom: 1em;
+}
+
+.enchere .mises table {
+	border-collapse: collapse;
+}
+
+.enchere .mises table tr:nth-child(odd) {
+	background: #eee;
+}
+
+.enchere .mises table td, .enchere .mises table th {
+	padding: .5em;
 }

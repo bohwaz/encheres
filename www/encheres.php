@@ -4,6 +4,13 @@ use Projet\Enchere;
 
 require __DIR__ . '/../bootstrap.php';
 
-$tpl->assign('encheres', Enchere::listEncheresCourantes());
+if (isset($_GET['ended']))
+{
+	$tpl->assign('encheres', Enchere::listEncheresTerminees());
+}
+else
+{
+	$tpl->assign('encheres', Enchere::listEncheresCourantes());
+}
 
 $tpl->display('encheres.tpl');

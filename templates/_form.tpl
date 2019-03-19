@@ -17,8 +17,10 @@
 					{if isset($field.min)}min="{$field.min}"{/if}
 					{if isset($field.max)}max="{$field.max}"{/if}
 					{if isset($field.step)}step="{$field.step}"{/if}
+					{if isset($field.size)}size="{$field.size}"{/if}
 					{if $field.input == 'longtext'}>{$field.value}</textarea>{else}value="{$field.value}" />{/if}
 				{/if}
+				{$field.post_label}
 			</dd>
 			{/foreach}
 		</dl>

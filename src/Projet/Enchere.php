@@ -47,11 +47,6 @@ class Enchere extends Entity
 	 */
 	protected $date_fin;
 
-	/**
-	 * @var int
-	 */
-	protected $nb_mises;
-
 	static public function list(string $order = 'id'): array
 	{
 		return self::populateFromQuery('SELECT __table.*, p.nom AS nom FROM __table INNER JOIN produits AS p ON p.id = __table.produit ORDER BY __table.' . $order);
@@ -65,7 +60,12 @@ class Enchere extends Entity
 
 	static public function listEncheresCourantes(): array
 	{
-		return self::populateFromQuery('SELECT * FROM liste_encheres_courantes;');
+		return self::populateFromQuery('SELECT * FROM liste_encheres WHERE NOW() BETWEEN date_debut AND date_fin;');
+	}
+
+	static public function listEncheresTerminees(): array
+	{
+		return self::populateFromQuery('SELECT * FROM liste_encheres WHERE NOW() > date_fin;');
 	}
 
 	public function listMises(): array

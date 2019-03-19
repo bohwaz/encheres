@@ -78,6 +78,10 @@ Le projet se base sur un ensemble de bibliothèques que j'ai développées depui
 
 Ces dépendances sont situées dans le répertoire `vendor/KD2/`
 
+### Modèle de base de données
+
+* Les sommes en euros sont stockées sous la forme d'entiers (ainsi "1,99 €"" sera stocké comme "199"), la virgule étant ajouté à l'affichage. Ceci permet d'éviter les problèmes d'arrondis avec les nombres flottants.
+
 ### Méta-modélisation et entités
 
 Chacun des modèles (classe) étend la classe `Entity`. Cette classe représente une entité et permet de méta-modéliser de manière générique chacune des entités (un produit, une catégorie, une enchère… = une entité).

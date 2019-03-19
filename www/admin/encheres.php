@@ -14,7 +14,7 @@ if (form('add'))
 }
 elseif (!empty($_GET['delete']))
 {
-	$p = new Encheres($_GET['delete']);
+	$p = new Enchere($_GET['delete']);
 	$p->delete();
 
 	redirect('/admin/encheres.php');
