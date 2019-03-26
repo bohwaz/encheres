@@ -4,7 +4,7 @@
 		{if !is_string($error) && $error.rule == 'csrf'}
 			<?php $error = 'Merci de renvoyer le formulaire'; ?>
 		{elseif !is_string($error)}
-			<?php $error = Projet\Entity::getErrorValidationMessage($error['rule'], $error['name']); ?>
+			<?php $error = Projet\Entity::getErrorValidationMessage($error['rule'], $error['name'], $error['params'] ?? []); ?>
 		{/if}
 		{$error}
 	</li>

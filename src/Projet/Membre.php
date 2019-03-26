@@ -130,6 +130,17 @@ class Membre extends Entity
 		return $this->save();
 	}
 
+	public function hasEnoughCredit(int $cost): bool
+	{
+		return $this->credit >= $cost;
+	}
+
+	public function removeCredit(int $amount): bool
+	{
+		$this->__set('credit', $this->credit - $amount);
+		return $this->save();
+	}
+
 	static public function refresh(): void
 	{
 		if (!isset($_COOKIE[session_name()]))

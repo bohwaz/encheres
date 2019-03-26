@@ -3,6 +3,7 @@
 use Projet\Enchere;
 use Projet\Produit;
 use Projet\Mise;
+use Projet\User_Exception;
 
 require __DIR__ . '/../bootstrap.php';
 
@@ -15,7 +16,11 @@ $enchere = new Enchere($_GET['id']);
 
 if (form('make_offer', ['min' => 'numeric|min:0.01|lte:max', 'max' => 'numeric|min:0.01|gte:min']))
 {
-	Mise::addRange($enchere->id, $user->id, intval(form_field('min')*100), intval(form_field('max')*100));
+	$min = intval(form_field('min')*100);
+	$max = intval(form_field('max')*100);
+
+	Mise::addRange($enchere, $user, $min, $max);
+	$user::updateLoggedUser($user);
 	redirect('/enchere.php?id=' . $enchere->id);
 }
 
@@ -27,8 +32,6 @@ $fields = [
 ];
 
 $tpl->assign('mise_fields', $fields);
-
-//var_dump($enchere->date_fin > (new DateTime) && $enchere->date_debut < (new DateTime)); exit;
 
 $tpl->assign('enchere', $enchere);
 $tpl->assign('produit', $produit);

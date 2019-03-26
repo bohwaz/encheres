@@ -40,24 +40,32 @@ class Mise extends Entity
 	 */
 	protected $date;
 
-	static public function addRange(int $enchere, int $utilisateur, int $start, int $end): bool
+	static public function addRange(Enchere $enchere, Membre $user, int $start, int $end): bool
 	{
+		$cost = $enchere->cout_mise * (1 + $start - $end);
+
+		if (!$user->hasEnoughCredit($cost)) {
+			throw new User_Exception('Vous ne disposez pas de suffisamment de crédit');
+		}
+
 		$db = DB::getInstance();
 		$db->begin();
 
-		$values = compact('enchere', 'utilisateur');
-		$st = $db->prepare('INSERT INTO mises (enchere, membre, montant, `date`) VALUES (:enchere, :utilisateur, :montant, NOW());');
+		$values = ['enchere' => $enchere->id, 'utilisateur' => $user->id];
+		$st = $db->prepare('INSERT IGNORE INTO mises (enchere, membre, montant, `date`) VALUES (:enchere, :utilisateur, :montant, NOW());');
+
+		$real_cost = 0;
 
 		for ($i = $start; $i <= $end; $i++)
 		{
 			$values['montant'] = $i;
 			$st->execute($values);
+
+			// On ne prend en compte que le coût des mises qui n'existaient pas déjà pour cet utilisateur
+			$real_cost += $st->rowCount();
 		}
 
-		$cout_par_mise = $db->firstColumn('SELECT cout_mise FROM encheres WHERE id = ?;', $enchere);
-		$cout = $cout_par_mise * min(1, ($end - $start));
-
-		$db->preparedQuery('UPDATE membres SET credit = credit - ? WHERE id = ?;', [$cout, $utilisateur]);
+		$user->removeCredit($real_cost * $enchere->cout_mise);
 
 		return $db->commit();
 	}

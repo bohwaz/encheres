@@ -233,7 +233,7 @@ abstract class Entity
 		return $rules;
 	}
 
-	static public function getErrorValidationMessage(string $rule, string $name)
+	static public function getErrorValidationMessage(string $rule, string $name, array $params = [])
 	{
 		switch ($rule)
 		{
@@ -245,6 +245,10 @@ abstract class Entity
 				return sprintf('Format de date invalide dans le champ %s.', $name);
 			case 'numeric':
 				return sprintf('Le champ %s doit être un nombre.', $name);
+			case 'gte':
+				return sprintf('Le champ %s doit être plus grand que le champ %s.', $name, $params[0]);
+			case 'lte':
+				return sprintf('Le champ %s doit être plus petit que le champ %s.', $name, $params[0]);
 			default:
 				return sprintf('Erreur "%s" dans le champ "%s"', $rule, $name);
 		}

@@ -17,10 +17,10 @@ Sous Debian / Ubuntu :
 
 ## Installation
 
-* Créer une nouvelle base de données et utilisateur MySQL ayant les droits sur cette BDD
-* Recopier le fichier `config.dist.php` en `config.local.php` et l'éditer pour modifier les paramètres de connexion à MySQL
-* Lancer `make install` ou `php install.php` en ligne de commande pour importer la base de données
-* Alternativement, importer le fichier `schema.sql` dans la base MySQL
+1. Créer une nouvelle base de données et utilisateur MySQL ayant les droits sur cette BDD
+2. Recopier le fichier `config.dist.php` en `config.local.php` et l'éditer pour modifier les paramètres de connexion à MySQL
+3. Lancer `make install` ou `php install.php` en ligne de commande pour importer la base de données
+4. (Alternativement, importer le fichier `schema.sql` dans la base MySQL)
 
 ## Lancement du site
 
@@ -46,7 +46,7 @@ Le projet est conçu autour d'un modèle MVC :
 
 * `src/Projet` contient le code source des classes (modèles)
 * `templates` contient les templates HTML/Smarty utilisés pour afficher le site (vues)
-* `www` contient les contrôleurs appelés par le serveur web, qui récupèrent les données des modèles et les affiches dans des vues (contrôleurs)
+* `www` contient les contrôleurs appelés par le serveur web, qui récupèrent les données des modèles et les affichent dans des vues
 
 Les modèles utilisent le namespace `Projet`, mais si le site était plus important il serait possible d'avoir plusieurs namespaces et donc plusieurs répertoires dans `src`.
 
@@ -96,6 +96,6 @@ Chaque propriété d'objet reçoit des annotations, présentes dans le docblock 
 * `@null` indique que cette propriété peut rester vide (NULL)
 * `@references` indique que le champ référence une autre table
 
-Ces spécificités (ou annotations) permettent de construire et valider les formulaires liés aux entités.
+Ces spécificités (ou annotations) permettent de construire et valider les formulaires liés aux entités (méta-modélisation des formulaires).
 
 Les méthodes d'objet d'une entité s'appliquent à une entité spécifique (création, modification, suppression, lecture, etc.) alors que les méthodes de classe (statiques) d'une entité s'appliquent à toutes les entités (par exemple : liste des entités, recherche, etc.).

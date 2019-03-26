@@ -115,7 +115,8 @@ CREATE TABLE IF NOT EXISTS mises (
 	montant SMALLINT UNSIGNED NOT NULL,
 	`date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (membre) REFERENCES membres (id) ON DELETE CASCADE,
-	FOREIGN KEY (enchere) REFERENCES encheres (id) ON DELETE CASCADE
+	FOREIGN KEY (enchere) REFERENCES encheres (id) ON DELETE CASCADE,
+	UNIQUE (membre, enchere, montant)
 ) ENGINE=InnoDB;
 
 INSERT INTO `mises` (`membre`, `enchere`, `montant`) VALUES

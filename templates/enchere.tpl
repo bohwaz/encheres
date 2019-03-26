@@ -2,7 +2,7 @@
 
 <section class="enchere">
 
-	<article class="produit" style="background-image: linear-gradient(to top, rgba(255,255,255,1) 20%,rgba(255,255,255,0) 150%), url('{$produit.image|image_url|escape:url}');">
+	<article class="produit" style="background-image: linear-gradient(to top, rgba(255,255,255,1) 20%,rgba(255,255,255,0) 150%), url('{$produit.image|image_url}');">
 		<h2>{$produit.nom}</h2>
 		<h3>Prix public : {$enchere.prix_public|raw|money}</h3>
 
