@@ -2,7 +2,7 @@
 
 ## Requis
 
-* PHP 7.1+
+* PHP 7.2+
 * MySQL 5.6+ ou MariaDB 10.1+
 
 Modules PHP :
