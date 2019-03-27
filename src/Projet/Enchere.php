@@ -101,7 +101,7 @@ class Enchere extends Entity
 			$criterias[] = sprintf('(%s AND %s)', $db->where('cd.nom', '=', $name), $db->where('pd.valeur', '=', $value));
 		}
 
-		$criterias = implode(' OR ', $criterias);
+		$criterias = count($criterias) ? implode(' OR ', $criterias) : '1';
 
 		return self::populateFromQuery('SELECT * FROM liste_encheres WHERE cid = ? AND pid IN (
 			SELECT pd.produit FROM produits_details AS pd
