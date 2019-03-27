@@ -21,8 +21,7 @@
 			<li><a href="{$www_url}encheres.php?ended">Enchères terminées</a></li>
 			<li><a href="{$www_url}faq.php">Comment ça marche&nbsp;?</a></li>
 		{if $is_logged}
-			{*<li class="credit"><b>Mon crédit&nbsp;: <strong>{$user.credit|money}</strong></b></li>*}
-			<li><a href="{$www_url}admin/compte.php">Créditer mon compte</a></li>
+			<li><a href="{$www_url}admin/compte.php"><strong>Mon compte</strong></a></li>
 			<li><a href="{$www_url}admin/logout.php">Déconnexion</a></li>
 			{if $is_admin}
 				<li><a href="{$www_url}admin/"><strong>Admin</strong></a></li>
