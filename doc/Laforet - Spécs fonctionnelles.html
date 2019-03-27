@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laforet - Spécs fonctionnelles</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="site-denchères-inversées---spécifications-fonctionnelles">Site d’enchères inversées - Spécifications fonctionnelles</h1>
+<p>Dans le cadre de ce projet, le développement sera effectué en suivant la méthode agile, et chaque itération (sprint) donnera lieu à une livraison et une phase de recette par le client.</p>
+<h2 id="définition-du-besoin">Définition du besoin</h2>
+<p>Un site d’enchères inversées est un jeu d’argent où les joueurs parient sur un objet.</p>
+<p>Le but du pari est de deviner si le joueur va être le seul à parier un montant qu’il est prêt à payer pour obtenir l’objet. Si le joueur est le seul à avoir parié ce montant et que c’est le montant le plus bas avec un seul pari, alors le joueur gagne.</p>
+<p>Exemple : un téléphone est mis en jeu. L’utilisateur A parie les montants de 1 €, 2 € et 3 €. L’utilisateur B parie les montants de 1 € à 5 €. L’utilisateur C parie les montants de 5 et 6 €. Si aucun autre pari (ou mise) n’a été fait, à la clôture de l’enchère c’est l’utilisateur B qui gagnera et devra régler la somme de 4 € pour recevoir le téléphone.</p>
+
+<table>
+<thead>
+<tr>
+<th>Montant</th>
+<th>Joueurs</th>
+<th>Gagnant ?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 €</td>
+<td>A, B</td>
+<td>Non</td>
+</tr>
+<tr>
+<td>2 €</td>
+<td>A, B</td>
+<td>Non</td>
+</tr>
+<tr>
+<td>3 €</td>
+<td>A, B</td>
+<td>Non</td>
+</tr>
+<tr>
+<td>4 €</td>
+<td>B</td>
+<td>Oui, mise unique la plus basse</td>
+</tr>
+<tr>
+<td>5 €</td>
+<td>B, C</td>
+<td>Non</td>
+</tr>
+<tr>
+<td>6 €</td>
+<td>C</td>
+<td>Non, mise unique, mais pas la plus basse</td>
+</tr>
+</tbody>
+</table><p>Dans le cadre de notre site d’enchères inversées, les joueurs doivent savoir si leur mise est la mise unique la plus basse, ou non, afin de les inciter à jouer davantage.</p>
+<p>De même les joueurs doivent pouvoir miser sur toute une plage de montants en une seule fois (par exemple tous les montants entre 1 et 2 €, au centime près).</p>
+<p>Lorsqu’il a remporté l’enchère, l’utilisateur passe à un système proche d’un site de e-commerce classique, où il doit indiquer son adresse de livraison et régler le montant de l’objet.</p>
+<p>Chaque mise devra faire l’objet d’un coût (déterminé par enchère), qui sera débité sur le compte du client.</p>
+<h2 id="fonctionnalités">Fonctionnalités</h2>
+<h3 id="site-public">Site public</h3>
+<p>Les utilisateurs non connectés devront pouvoir accéder à :</p>
+<ul>
+<li>la liste des enchères en cours et passées</li>
+<li>des pages d’information statiques (comment ça marche, aide, contact, mentions légales</li>
+<li>le formulaire d’inscription</li>
+<li>le formulaire de connexion</li>
+</ul>
+<div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" id="mermaid-svg-FE4w3FCmIhZYJTKZ" width="100%" style="max-width: 665px;" viewBox="0 0 665 159.43331909179688"><g transform="translate(-12, -12)"><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M263,50.87841561237113L67.5,91.71665954589844L67.5,116.71665954589844" marker-end="url(#arrowhead196)" style="fill:none"></path><defs><marker id="arrowhead196" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M263,63.601351538369826L213,91.71665954589844L213,116.71665954589844" marker-end="url(#arrowhead197)" style="fill:none"></path><defs><marker id="arrowhead197" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M335,63.601351538369826L385,91.71665954589844L385,116.71665954589844" marker-end="url(#arrowhead198)" style="fill:none"></path><defs><marker id="arrowhead198" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M335,49.361432779246364L589,91.71665954589844L589,116.71665954589844" marker-end="url(#arrowhead199)" style="fill:none"></path><defs><marker id="arrowhead199" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node" style="opacity: 1;" id="Accueil" transform="translate(299,43.35832977294922)"><rect rx="0" ry="0" x="-36" y="-23.35832977294922" width="72" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-26,-13.358329772949219)"><foreignObject width="52" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Accueil</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Inscription" transform="translate(67.5,140.07498931884766)"><rect rx="0" ry="0" x="-47.5" y="-23.35832977294922" width="95" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-37.5,-13.358329772949219)"><foreignObject width="75" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Inscription</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Connexion" transform="translate(213,140.07498931884766)"><rect rx="0" ry="0" x="-48" y="-23.35832977294922" width="96" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-38,-13.358329772949219)"><foreignObject width="76" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Connexion</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Enchères" transform="translate(385,140.07498931884766)"><rect rx="5" ry="5" x="-74" y="-23.35832977294922" width="148" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-64,-13.358329772949219)"><foreignObject width="128" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Enchères en cours</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Infos" transform="translate(589,140.07498931884766)"><rect rx="5" ry="5" x="-80" y="-23.35832977294922" width="160" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-70,-13.358329772949219)"><foreignObject width="140" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Pages d'information</div></foreignObject></g></g></g></g></g></g></svg></div>
+<h3 id="utilisateurs-connectés">Utilisateurs connectés</h3>
+<p>Les utilisateurs connectés eux devront avoir accès à ces fonctionnalités après connexion :</p>
+<ul>
+<li>Créditer le compte</li>
+<li>Déconnexion</li>
+<li>Rechercher dans les produits en vente</li>
+<li>Liste des enchères terminées</li>
+<li>Liste des enchères en cours
+<ul>
+<li>Fiche produit</li>
+<li>Déposer une mise</li>
+<li>Payer une mise</li>
+</ul>
+</li>
+</ul>
+<div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" id="mermaid-svg-9t5cUyQ3J5u5pTsB" width="100%" style="max-width: 615.75px;" viewBox="0 0 615.75 449.5832977294922"><g transform="translate(-12, -12)"><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M260.25,62.07768323344569L336.25,91.71665954589844L336.25,140.07498931884766L336.25,188.43331909179688L383.4238790547744,213.43331909179688" marker-end="url(#arrowhead232)" style="fill:none"></path><defs><marker id="arrowhead232" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M218.40858128275755,66.71665954589844L225,91.71665954589844L225,140.07498931884766L225,188.43331909179688L225,213.43331909179688" marker-end="url(#arrowhead233)" style="fill:none"></path><defs><marker id="arrowhead233" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M164.25,65.00121862238103L105,91.71665954589844L105,116.71665954589844" marker-end="url(#arrowhead234)" style="fill:none"></path><defs><marker id="arrowhead234" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M260.25,51.18040164860739L509,91.71665954589844L509,116.71665954589844" marker-end="url(#arrowhead235)" style="fill:none"></path><defs><marker id="arrowhead235" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M509,163.43331909179688L509,188.43331909179688L466.86661761135224,213.43331909179688" marker-end="url(#arrowhead236)" style="fill:none"></path><defs><marker id="arrowhead236" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M225,260.1499786376953L225,285.1499786376953L225,310.1499786376953" marker-end="url(#arrowhead237)" style="fill:none"></path><defs><marker id="arrowhead237" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M378.5936192251606,260.1499786376953L326.25,285.1499786376953L273.9063807748394,310.1499786376953" marker-end="url(#arrowhead238)" style="fill:none"></path><defs><marker id="arrowhead238" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M416.51115888762865,260.1499786376953L404.75,285.1499786376953L404.75,310.1499786376953" marker-end="url(#arrowhead239)" style="fill:none"></path><defs><marker id="arrowhead239" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M487.75749137443177,260.1499786376953L552.25,285.1499786376953L552.25,310.1499786376953" marker-end="url(#arrowhead240)" style="fill:none"></path><defs><marker id="arrowhead240" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M404.75,356.86663818359375L404.75,381.86663818359375L458.5,412.90258117220293" marker-end="url(#arrowhead241)" style="fill:none"></path><defs><marker id="arrowhead241" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M552.25,356.86663818359375L552.25,381.86663818359375L518.5,407.4681068869198" marker-end="url(#arrowhead242)" style="fill:none"></path><defs><marker id="arrowhead242" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node" style="opacity: 1;" id="Connexion" transform="translate(212.25,43.35832977294922)"><rect rx="0" ry="0" x="-48" y="-23.35832977294922" width="96" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-38,-13.358329772949219)"><foreignObject width="76" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Connexion</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Enchères" transform="translate(427.5,236.7916488647461)"><rect rx="5" ry="5" x="-74" y="-23.35832977294922" width="148" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-64,-13.358329772949219)"><foreignObject width="128" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Enchères en cours</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="EnchèresT" transform="translate(225,236.7916488647461)"><rect rx="5" ry="5" x="-78.5" y="-23.35832977294922" width="157" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-68.5,-13.358329772949219)"><foreignObject width="137" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Enchères terminées</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Créditer" transform="translate(105,140.07498931884766)"><rect rx="5" ry="5" x="-85" y="-23.35832977294922" width="170" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-75,-13.358329772949219)"><foreignObject width="150" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Créditer mon compte</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Recherche" transform="translate(509,140.07498931884766)"><rect rx="0" ry="0" x="-46.5" y="-23.35832977294922" width="93" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-36.5,-13.358329772949219)"><foreignObject width="73" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Recherche</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Produit" transform="translate(225,333.50830841064453)"><rect rx="5" ry="5" x="-57" y="-23.35832977294922" width="114" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-47,-13.358329772949219)"><foreignObject width="94" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Fiche produit</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Miser" transform="translate(404.75,333.50830841064453)"><rect rx="0" ry="0" x="-30" y="-23.35832977294922" width="60" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-20,-13.358329772949219)"><foreignObject width="40" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Miser</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="MiserG" transform="translate(552.25,333.50830841064453)"><rect rx="5" ry="5" x="-67.5" y="-23.35832977294922" width="135" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-57.5,-13.358329772949219)"><foreignObject width="115" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Miser un groupe</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Payer" transform="translate(488.5,430.22496795654297)"><rect rx="0" ry="0" x="-30" y="-23.35832977294922" width="60" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-20,-13.358329772949219)"><foreignObject width="40" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Payer</div></foreignObject></g></g></g></g></g></g></svg></div>
+<h3 id="administration">Administration</h3>
+<p>Les administrateurs doivent pouvoir accéder aux fonctions suivantes</p>
+<ul>
+<li>Catégorie de produits : lister, ajouter, supprimer</li>
+<li>Produits : lister, ajouter, supprimer, renseigner les détails, ajouter et supprimer des images</li>
+<li>Utilisateurs : lister, supprimer, créditer le compte d’un utilisateur</li>
+<li>Enchères :
+<ul>
+<li>Créer une nouvelle enchère</li>
+<li>Lister les enchères en cours</li>
+<li>Clôturer ou modifier une enchère en cours</li>
+<li>Informations (gagnant, participants) sur une enchère en cours ou terminée</li>
+</ul>
+</li>
+</ul>
+<div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" id="mermaid-svg-OzBnv3cpyczylM0F" width="100%" style="max-width: 447px;" viewBox="0 0 447 933.1665954589844"><g transform="translate(-12, -12)"><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M87.78309668864006,455.22496795654297L170,91.71665954589844L198,91.71665954589844" marker-end="url(#arrowhead266)" style="fill:none"></path><defs><marker id="arrowhead266" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M96.5882578363735,455.22496795654297L170,333.50830841064453L205.5,333.50830841064453" marker-end="url(#arrowhead267)" style="fill:none"></path><defs><marker id="arrowhead267" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M103.63238675456024,501.9416275024414L170,575.2999572753906L195,575.2999572753906" marker-end="url(#arrowhead268)" style="fill:none"></path><defs><marker id="arrowhead268" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M281.96846171358396,68.35832977294922L321,43.35832977294922L362,43.35832977294922" marker-end="url(#arrowhead269)" style="fill:none"></path><defs><marker id="arrowhead269" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M281.96846171358396,115.07498931884766L321,140.07498931884766L352,140.07498931884766" marker-end="url(#arrowhead270)" style="fill:none"></path><defs><marker id="arrowhead270" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M263.734230856792,310.1499786376953L321,236.7916488647461L362,236.7916488647461" marker-end="url(#arrowhead271)" style="fill:none"></path><defs><marker id="arrowhead271" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M285.5,333.50830841064453L321,333.50830841064453L352,333.50830841064453" marker-end="url(#arrowhead272)" style="fill:none"></path><defs><marker id="arrowhead272" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M263.734230856792,356.86663818359375L321,430.22496795654297L358.5,430.22496795654297" marker-end="url(#arrowhead273)" style="fill:none"></path><defs><marker id="arrowhead273" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M281.96846171358396,551.9416275024414L321,526.9416275024414L372,526.9416275024414" marker-end="url(#arrowhead274)" style="fill:none"></path><defs><marker id="arrowhead274" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M281.96846171358396,598.6582870483398L321,623.6582870483398L359.5,623.6582870483398" marker-end="url(#arrowhead275)" style="fill:none"></path><defs><marker id="arrowhead275" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M88.53782478701721,501.9416275024414L170,817.0916061401367L203.5,817.0916061401367" marker-end="url(#arrowhead276)" style="fill:none"></path><defs><marker id="arrowhead276" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M263.734230856792,793.7332763671875L321,720.3749465942383L369,720.3749465942383" marker-end="url(#arrowhead277)" style="fill:none"></path><defs><marker id="arrowhead277" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M287.5,817.0916061401367L321,817.0916061401367L358.5,817.0916061401367" marker-end="url(#arrowhead278)" style="fill:none"></path><defs><marker id="arrowhead278" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M263.734230856792,840.4499359130859L321,913.8082656860352L346,913.8082656860352" marker-end="url(#arrowhead279)" style="fill:none"></path><defs><marker id="arrowhead279" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node" style="opacity: 1;" id="Administration" transform="translate(82.5,478.5832977294922)"><rect rx="0" ry="0" x="-62.5" y="-23.35832977294922" width="125" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-52.5,-13.358329772949219)"><foreignObject width="105" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Administration</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Catégories" transform="translate(245.5,91.71665954589844)"><rect rx="0" ry="0" x="-47.5" y="-23.35832977294922" width="95" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-37.5,-13.358329772949219)"><foreignObject width="75" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Catégories</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Produits" transform="translate(245.5,333.50830841064453)"><rect rx="0" ry="0" x="-40" y="-23.35832977294922" width="80" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-30,-13.358329772949219)"><foreignObject width="60" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Produits</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Utilisateurs" transform="translate(245.5,575.2999572753906)"><rect rx="0" ry="0" x="-50.5" y="-23.35832977294922" width="101" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-40.5,-13.358329772949219)"><foreignObject width="81" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Utilisateurs</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="AjouterC" transform="translate(398.5,43.35832977294922)"><rect rx="5" ry="5" x="-36.5" y="-23.35832977294922" width="73" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-26.5,-13.358329772949219)"><foreignObject width="53" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Ajouter</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="SupprimerC" transform="translate(398.5,140.07498931884766)"><rect rx="5" ry="5" x="-46.5" y="-23.35832977294922" width="93" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-36.5,-13.358329772949219)"><foreignObject width="73" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Supprimer</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="AjouterP" transform="translate(398.5,236.7916488647461)"><rect rx="5" ry="5" x="-36.5" y="-23.35832977294922" width="73" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-26.5,-13.358329772949219)"><foreignObject width="53" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Ajouter</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="SupprimerP" transform="translate(398.5,333.50830841064453)"><rect rx="5" ry="5" x="-46.5" y="-23.35832977294922" width="93" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-36.5,-13.358329772949219)"><foreignObject width="73" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Supprimer</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="ModifierP" transform="translate(398.5,430.22496795654297)"><rect rx="5" ry="5" x="-40" y="-23.35832977294922" width="80" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-30,-13.358329772949219)"><foreignObject width="60" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Modifier</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Liste" transform="translate(398.5,526.9416275024414)"><rect rx="0" ry="0" x="-26.5" y="-23.35832977294922" width="53" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-16.5,-13.358329772949219)"><foreignObject width="33" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Liste</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Créditer" transform="translate(398.5,623.6582870483398)"><rect rx="0" ry="0" x="-39" y="-23.35832977294922" width="78" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-29,-13.358329772949219)"><foreignObject width="58" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Créditer</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Enchères" transform="translate(245.5,817.0916061401367)"><rect rx="0" ry="0" x="-42" y="-23.35832977294922" width="84" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-32,-13.358329772949219)"><foreignObject width="64" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Enchères</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Créer" transform="translate(398.5,720.3749465942383)"><rect rx="0" ry="0" x="-29.5" y="-23.35832977294922" width="59" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-19.5,-13.358329772949219)"><foreignObject width="39" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Créer</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Modifier" transform="translate(398.5,817.0916061401367)"><rect rx="0" ry="0" x="-40" y="-23.35832977294922" width="80" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-30,-13.358329772949219)"><foreignObject width="60" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Modifier</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="Participants" transform="translate(398.5,913.8082656860352)"><rect rx="0" ry="0" x="-52.5" y="-23.35832977294922" width="105" height="46.71665954589844"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-42.5,-13.358329772949219)"><foreignObject width="85" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Participants</div></foreignObject></g></g></g></g></g></g></svg></div>
+<h3 id="détails-des-droits-utilisateurs">Détails des droits utilisateurs</h3>
+
+<table>
+<thead>
+<tr>
+<th>Fonctionnalité</th>
+<th>Anonyme</th>
+<th>Connecté</th>
+<th>Admin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pages statiques</td>
+<td>Oui</td>
+<td>Oui</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td>Connexion</td>
+<td>Oui</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Inscription</td>
+<td>Oui</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Voir les enchères terminées</td>
+<td>Oui</td>
+<td>Oui</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td>Déconnexion</td>
+<td>–</td>
+<td>Oui</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td>Faire des mises</td>
+<td>–</td>
+<td>Oui</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td>Voir les enchères en cours</td>
+<td>–</td>
+<td>Oui</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td>Rechercher dans les enchères</td>
+<td>–</td>
+<td>Oui</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td>Administrer les mises et contenus</td>
+<td>–</td>
+<td>–</td>
+<td>Oui</td>
+</tr>
+</tbody>
+</table><h3 id="ergonomie">Ergonomie</h3>
+<p>Le site doit être simple, léger, rapide et performant afin que les utilisateurs puissent parier rapidement.</p>
+<h4 id="formulaires">Formulaires</h4>
+<p>Les formulaires doivent suivre l’ergonomie et l’UI du client, sans imposer de style particulier.</p>
+<h2 id="sprint-n°1-deadline--1er-avril-2019">Sprint n°1 (deadline : 1er avril 2019)</h2>
+<p>Les user stories suivantes seront réalisées dans le cadre de cette première itération :</p>
+<ol>
+<li>En tant que <strong>visiteur</strong> je veux comprendre ce qu’est ce site pour savoir si je suis intéressé.</li>
+<li>En tant que <strong>visiteur</strong> je veux voir les <strong>enchères en cours</strong> pour savoir si les produits m’intéressent.</li>
+<li>En tant que <strong>visiteur</strong> je veux pouvoir <strong>m’inscrire</strong> pour participer.</li>
+<li>En tant <strong>qu’utilisateur</strong> je veux pouvoir lire la FAQ pour avoir des réponses à mes questions.</li>
+<li>En tant que <strong>visiteur</strong> je veux pouvoir me connecter pour pouvoir participer.</li>
+<li>En tant qu’<strong>utilisateur connecté</strong> je veux pouvoir <strong>consulter mon compte et voir mon crédit</strong>.</li>
+<li>En tant qu’<strong>utilisateur connecté</strong> je veux pouvoir <strong>ajouter des crédits</strong> à mon compte.</li>
+<li>En tant qu’<strong>utilisateur connecté</strong> je peux <strong>déposer une mise</strong> ou une plage de mises sur une enchère en cours.</li>
+<li>En tant qu’<strong>utilisateur connecté</strong> je peux <strong>voir les mises que j’ai déposées</strong> sur une enchère et savoir si une de mes mises est gagnante.</li>
+<li>En tant qu’<strong>administrateur</strong> je peux <strong>ajouter et supprimer des catégories de produits</strong>.</li>
+<li>En tant qu’<strong>administrateur</strong> je peux <strong>ajouter et supprimer des produits</strong>.</li>
+<li>En tant qu’<strong>administrateur</strong> je peux <strong>ajouter et supprimer des images sur une fiche produit</strong>.</li>
+<li>En tant qu’<strong>administrateur</strong> je peux <strong>choisir une image comme étant l’image principale</strong> d’un produit, qui sera affichée dans les listes d’enchères.</li>
+<li>En tant qu’<strong>administrateur</strong> je peux renseigner les <strong>détails</strong> (caractéristiques) d’un produit*</li>
+<li>En tant qu’<strong>administrateur</strong> je peux <strong>créer, modifier et supprimer des enchères</strong> sur des produits.</li>
+<li>En tant qu’<strong>administrateur</strong> je peux voir les mises effectuées sur une enchère.</li>
+</ol>
+<h3 id="en-tant-que-visiteur-je-veux-comprendre-ce-quest-ce-site-pour-savoir-si-je-suis-intéressé.">En tant que <strong>visiteur</strong> je veux comprendre ce qu’est ce site pour savoir si je suis intéressé.</h3>
+<p>ÉTANT DONNÉ que je suis sur la page d’accueil du site<br>
+QUAND j’arrive sur le site<br>
+ALORS je lis un texte d’introduction décrivant le site succinctement.</p>
+<h3 id="en-tant-que-visiteur-je-veux-voir-les-enchères-en-cours-pour-savoir-si-les-produits-mintéressent.">En tant que <strong>visiteur</strong> je veux voir les <strong>enchères en cours</strong> pour savoir si les produits m’intéressent.</h3>
+<p>ÉTANT DONNÉ que je suis sur la page d’accueil du site<br>
+QUAND je clique sur “Enchères en cours”<br>
+ALORS une liste de produits en cours d’enchères s’affiche.</p>
+<h3 id="en-tant-que-visiteur-je-veux-pouvoir-lire-la-faq-pour-avoir-des-réponses-à-mes-questions.">En tant <strong>que visiteur</strong> je veux pouvoir lire la FAQ pour avoir des réponses à mes questions.</h3>
+<p>ÉTANT DONNÉ que je suis sur la page d’accueil du site<br>
+QUAND je clique sur “Comment ça marche ?”<br>
+ALORS une liste de questions et réponses s’affiche.</p>
+<h3 id="en-tant-que-visiteur-je-veux-pouvoir-minscrire-pour-participer.">En tant que <strong>visiteur</strong> je veux pouvoir <strong>m’inscrire</strong> pour participer.</h3>
+<p>ÉTANT DONNÉ que je suis sur la page “Inscription”<br>
+ET que je renseigne une adresse e-mail<br>
+ET que je renseigne un mot de passe<br>
+QUAND je clique sur “M’inscrire”<br>
+ALORS mon compte est créé et je suis connecté.</p>
+<h3 id="en-tant-que-visiteur-je-veux-pouvoir-me-connecter-pour-pouvoir-participer.">En tant que <strong>visiteur</strong> je veux pouvoir me connecter pour pouvoir participer.</h3>
+<p>ÉTANT DONNÉ que je suis sur la page de connexion<br>
+QUAND je remplis mon adresse e-mail<br>
+ET que je remplis mon mot de passe<br>
+ET que je clique sur le bouton “Connexion”<br>
+ALORS je suis connecté et redirigé vers la page d’accueil.</p>
+<h3 id="en-tant-quutilisateur-connecté-je-veux-pouvoir-consulter-mon-compte-et-voir-mon-crédit.">En tant qu’<strong>utilisateur connecté</strong> je veux pouvoir <strong>consulter mon compte et voir mon crédit</strong>.</h3>
+<p>ÉTANT DONNÉ que je suis connecté<br>
+QUAND je clique sur “Mon compte”<br>
+ALORS s’affiche une page indiquant mes informations personnelles et mon solde de crédit.</p>
+<h3 id="en-tant-quutilisateur-connecté-je-veux-pouvoir-ajouter-des-crédits-à-mon-compte.">En tant qu’<strong>utilisateur connecté</strong> je veux pouvoir <strong>ajouter des crédits</strong> à mon compte.</h3>
+<p>ÉTANT DONNÉ que je suis connecté et sur la page “Mon compte”<br>
+QUAND je renseigne un montant<br>
+ET que je clique sur le bouton “Créditer mon compte”<br>
+ALORS ce montant est ajouté à mon solde de crédit.</p>
+<h3 id="en-tant-quutilisateur-connecté-je-peux-déposer-une-mise-ou-une-plage-de-mises-sur-une-enchère-en-cours.">En tant qu’<strong>utilisateur connecté</strong> je peux <strong>déposer une mise</strong> ou une plage de mises sur une enchère en cours.</h3>
+<p>ÉTANT DONNÉ que je suis connecté et sur la page d’une enchère<br>
+QUAND je renseigne une plage de mises<br>
+ET que je clique sur<br>
+ALORS chacune des mises de la plage renseignée est placée sur cette enchère<br>
+SI mon crédit est suffisant.</p>
+<h3 id="en-tant-quutilisateur-connecté-je-peux-voir-les-mises-que-jai-déposées-sur-une-enchère-et-savoir-si-une-de-mes-mises-est-gagnante.">En tant qu’<strong>utilisateur connecté</strong> je peux <strong>voir les mises que j’ai déposées</strong> sur une enchère et savoir si une de mes mises est gagnante.</h3>
+<p>ÉTANT DONNÉ que je suis connecté<br>
+QUAND je vais sur la page d’une enchère à laquelle j’ai participé<br>
+ALORS s’affiche la liste des mises que j’ai effectuées et si celles-ci sont uniques ou non.</p>
+<h3 id="en-tant-quadministrateur-je-peux-ajouter-et-supprimer-des-catégories-de-produits.">En tant qu’<strong>administrateur</strong> je peux <strong>ajouter et supprimer des catégories de produits</strong>.</h3>
+<p>ÉTANT DONNÉ que je suis connecté avec un compte administrateur<br>
+QUAND je clique sur “Admin”<br>
+ET que je clique sur “Catégories”<br>
+ALORS s’affiche une page listant les catégories de produit, me permettant de les supprimer ou d’en ajouter une nouvelle.</p>
+<h3 id="en-tant-quadministrateur-je-peux-ajouter-et-supprimer-des-produits.">En tant qu’<strong>administrateur</strong> je peux <strong>ajouter et supprimer des produits</strong>.</h3>
+<p>ÉTANT DONNÉ que je suis connecté avec un compte administrateur<br>
+QUAND je clique sur “Admin”<br>
+ET que je clique sur “Produits”<br>
+ALORS s’affiche une page listant les produits, me permettant de les supprimer ou d’en ajouter un nouveau.</p>
+<h3 id="en-tant-quadministrateur-je-peux-ajouter-et-supprimer-des-images-sur-une-fiche-produit.">En tant qu’<strong>administrateur</strong> je peux <strong>ajouter et supprimer des images sur une fiche produit</strong>.</h3>
+<p>ÉTANT DONNÉ que je suis connecté avec un compte administrateur<br>
+QUAND je clique sur “Admin”<br>
+ET que je clique sur “Produits”<br>
+ET que je clique sur le nom d’un produit<br>
+ALORS s’affiche une page listant les images associées au produit, me permettant de les supprimer ou d’en ajouter une nouvelle.</p>
+<h3 id="en-tant-quadministrateur-je-peux-choisir-une-image-comme-étant-limage-principale-dun-produit-qui-sera-affichée-dans-les-listes-denchères.">En tant qu’<strong>administrateur</strong> je peux <strong>choisir une image comme étant l’image principale</strong> d’un produit, qui sera affichée dans les listes d’enchères.</h3>
+<p>ÉTANT DONNÉ que je suis connecté avec un compte administrateur<br>
+QUAND je clique sur “Admin”<br>
+ET que je clique sur “Produits”<br>
+ET que je clique sur le nom d’un produit<br>
+ALORS s’affiche une page listant les images associées au produit, me permettant de voir celle qui est actuellement affichée dans les listes de produits et d’enchères, et d’en choisir une autre.</p>
+<h3 id="en-tant-quadministrateur-je-peux-renseigner-les-détails-caractéristiques-dun-produit">En tant qu’<strong>administrateur</strong> je peux renseigner les <strong>détails</strong> (caractéristiques) d’un produit*</h3>
+<p>ÉTANT DONNÉ que je suis connecté avec un compte administrateur<br>
+QUAND je clique sur “Admin”<br>
+ET que je clique sur “Produits”<br>
+ET que je clique sur le nom d’un produit<br>
+ALORS s’affiche une page listant les caractéristiques d’un produit et me permettant d’en ajouter de nouvelles.</p>
+<h3 id="en-tant-quadministrateur-je-peux-créer-modifier-et-supprimer-des-enchères-sur-des-produits.">En tant qu’<strong>administrateur</strong> je peux <strong>créer, modifier et supprimer des enchères</strong> sur des produits.</h3>
+<p>ÉTANT DONNÉ que je suis connecté avec un compte administrateur<br>
+QUAND je clique sur “Admin”<br>
+ET que je clique sur “Enchères”<br>
+ALORS s’affiche une page listant les enchères existantes et me permettant de les supprimer ou d’en créer une nouvelle.</p>
+<h3 id="en-tant-quadministrateur-je-peux-voir-les-mises-effectuées-sur-une-enchère.">En tant qu’<strong>administrateur</strong> je peux voir les mises effectuées sur une enchère.</h3>
+<p>ÉTANT DONNÉ que je suis connecté avec un compte administrateur<br>
+QUAND je clique sur “Admin”<br>
+ET que je clique sur “Enchères”<br>
+ET que je clique sur une enchère<br>
+ALORS s’affiche une page listant les mises actuellement faites sur cette enchère.</p>
+<h2 id="user-stories-à-réaliser-sur-le-sprint-n°2">User stories à réaliser sur le sprint n°2</h2>
+<ol>
+<li>En tant qu’<strong>administrateur</strong> je peux voir les statistiques (gains, nombre de mises) sur une enchère.</li>
+<li>En tant qu’<strong>utilisateur</strong> je peux rechercher un produit par mot-clé (recherche fulltext).</li>
+<li>En tant qu’<strong>utilisateur</strong> je peux indiquer mon nom et mon adresse dans mon profil.</li>
+<li>En tant qu’<strong>utilisateur</strong> je peux payer lorsque je remporte une enchère.</li>
+<li>En tant qu’<strong>utilisateur</strong> je peux payer pour créditer mon compte.</li>
+<li>En tant qu’<strong>administrateur</strong> je peux ajouter, modifier et supprimer des caractéristiques possibles selon les catégories de produits</li>
+<li>En tant qu’<strong>administrateur</strong> une confirmation m’est demandée avant de supprimer un produit, une catégorie, une image ou une enchère.</li>
+</ol>
+<h2 id="user-stories-à-réaliser-sur-le-sprint-n°3">User stories à réaliser sur le sprint n°3</h2>
+<ol>
+<li>En tant qu’utilisateur je veux recevoir une notification par e-mail quand je remporte une enchère.</li>
+<li>En tant qu’utilisateur je reçois une notification par e-mail une heure avant la clôture de l’enchère m’indiquant si ma mise est gagnante ou non.</li>
+<li>En tant qu’administrateur, je peux configurer une enchère pour qu’elle s’arrête automatiquement lorsqu’un seuil de rentabilité est atteint.</li>
+<li>En tant qu’administrateur je peux lister, gérer le profil et voir les mises des utilisateurs inscrits.</li>
+</ol>
+</div>
+</body>
+
+</html>
