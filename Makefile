@@ -15,3 +15,8 @@ deps:
 
 install:
 	php install.php
+
+release:
+	make deps
+	rm -rf cache/compiled/*
+	zip -r Projet.zip bootstrap.php cache config.dist.php install.php Makefile modele_sql.png README.md run_tests.php schema.sql template.php templates vendor www .git .gitignore src
